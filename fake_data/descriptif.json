@@ -1,0 +1,354 @@
+{
+    "response": {
+        "historique": "\u00e9tablissement neuf \u00e0 construire",
+        "descriptif": "",
+        "derogations": "aucune",
+        "descriptifs_techniques": {
+            "Implantation": {
+                "Surface emprise au sol (m\u00b2)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_IMPLANTATION_SURFACE_ETABLISSEMENT"
+                },
+                "Surface de plancher (m\u00b2)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_IMPLANTATION_SHON_ETABLISSEMENT"
+                },
+                "Nombre de niveaux": {
+                    "value": "1",
+                    "type": "int",
+                    "key": "DESCTECH_IMPLANTATION_NBNIVEAUX_ETABLISSEMENT"
+                },
+                "Plancher bas du dernier niveau (m)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_IMPLANTATION_PBDN_ETABLISSEMENT"
+                },
+                "Surface totale (m\u00b2)": {
+                    "value": "6163",
+                    "type": "int",
+                    "key": "DESCTECH_IMPLANTATION_SURFACETOTALE_ETABLISSEMENT"
+                },
+                "Surface accessible au public (m\u00b2)": {
+                    "value": "5090",
+                    "type": "int",
+                    "key": "DESCTECH_IMPLANTATION_SURFACEACCPUBLIC_ETABLISSEMENT"
+                }
+            },
+            "Desserte": {
+                "Nombre de fa\u00e7ades accessibles": {
+                    "value": "3",
+                    "type": "int",
+                    "key": "DESCTECH_DESSERTE_NBFACADELIBRE_ETABLISSEMENT"
+                },
+                "Voie engin": {
+                    "value": "3",
+                    "type": "int",
+                    "key": "DESCTECH_DESSERTE_VOIEENGIN_ETABLISSEMENT"
+                },
+                "Voie echelle": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_DESSERTE_VOIEECHELLE_ETABLISSEMENT"
+                },
+                "Espace libre": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_DESSERTE_ESPACELIBRE_ETABLISSEMENT"
+                }
+            },
+            "Isolement par rapport aux tiers": {
+                "Lat\u00e9ral CF (minute)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_ISOLEMENT_LATERALCF_ETABLISSEMENT"
+                },
+                "Superpos\u00e9 CF (minute)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_ISOLEMENT_SUPERPOSECF_ETABLISSEMENT"
+                },
+                "Vis-\u00e0-vis (m)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_ISOLEMENT_VISAVIS_ETABLISSEMENT"
+                }
+            },
+            "Stabilit\u00e9 au feu": {
+                "Structure SF (minute)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_STABILITE_STRUCTURESF_ETABLISSEMENT"
+                },
+                "Plancher SF (minute)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_STABILITE_PLANCHERSF_ETABLISSEMENT"
+                }
+            },
+            "Distribution int\u00e9rieure": {
+                "Cloisonnement traditionnel": {
+                    "value": "1",
+                    "type": "tinyint",
+                    "key": "DESCTECH_DISTRIBUTION_CLOISONNEMENTTRAD_ETABLISSEMENT"
+                },
+                "Secteurs": {
+                    "value": "0",
+                    "type": "tinyint",
+                    "key": "DESCTECH_DISTRIBUTION_SECTEURS_ETABLISSEMENT"
+                },
+                "Compartiments": {
+                    "value": "0",
+                    "type": "tinyint",
+                    "key": "DESCTECH_DISTRIBUTION_COMPARTIMENTS_ETABLISSEMENT"
+                }
+            },
+            "Locaux \u00e0 risques": {
+                "Nombre de locaux \u00e0 risques moyens": {
+                    "value": "2",
+                    "type": "int",
+                    "key": "DESCTECH_LOCAUXARISQUE_NBRISQUESMOYENS_ETABLISSEMENT"
+                },
+                "Nombre de locaux \u00e0 risques importants": {
+                    "value": "3",
+                    "type": "int",
+                    "key": "DESCTECH_LOCAUXARISQUE_NBRISQUESIMPORTANTS_ETABLISSEMENT"
+                }
+            },
+            "Espaces d'attentes s\u00e9curis\u00e9s": {
+                "Nombre": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_ESPACES_NOMBRE_ETABLISSEMENT"
+                },
+                "Nombre de niveaux concern\u00e9s": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_ESPACES_NIVEAUCONCERNE_ETABLISSEMENT"
+                }
+            },
+            "D\u00e9senfumage": {
+                "Naturel": {
+                    "value": "1",
+                    "type": "tinyint",
+                    "key": "DESCTECH_DESENFUMAGE_NATUREL_ETABLISSEMENT"
+                },
+                "Mecanique": {
+                    "value": "0",
+                    "type": "tinyint",
+                    "key": "DESCTECH_DESENFUMAGE_MECANIQUE_ETABLISSEMENT"
+                },
+                "Commentaire": {
+                    "value": "4 cantons command\u00e9s depuis le CMSI",
+                    "type": "text",
+                    "key": "DESCTECH_DESENFUMAGE_COMMENTAIRE_ETABLISSEMENT"
+                }
+            },
+            "Chaufferies": {
+                "Nombre": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_CHAUFFERIES_NB_ETABLISSEMENT"
+                },
+                "Puissance max (kw)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_CHAUFFERIES_PUISSMAX_ETABLISSEMENT"
+                },
+                "Nombre de chaufferies 30kw": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_CHAUFFERIES_NB30KW"
+                },
+                "Nombre de chaufferies 70kw": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_CHAUFFERIES_NB70KW"
+                },
+                "Nombre de chaufferies 2mw": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_CHAUFFERIES_NB2MW"
+                },
+                "Puissance totale (kw)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_CHAUFFERIES_PUISSANCETOTALE"
+                }
+            },
+            "Localisation des coupures d'\u00e9nergies": {
+                "Gaz": {
+                    "value": "",
+                    "type": "text",
+                    "key": "DESCTECH_COUPURENRJ_GAZ_ETABLISSEMENT"
+                },
+                "\u00c9lectricit\u00e9": {
+                    "value": "puissance 250KVA",
+                    "type": "text",
+                    "key": "DESCTECH_COUPURENRJ_ELEC_ETABLISSEMENT"
+                },
+                "Photovolta\u00efque": {
+                    "value": "",
+                    "type": "text",
+                    "key": "DESCTECH_COUPURENRJ_PHOTOVOLTAIQUE_ETABLISSEMENT"
+                },
+                "Autre": {
+                    "value": "",
+                    "type": "text",
+                    "key": "DESCTECH_COUPURENRJ_AUTRE_ETABLISSEMENT"
+                }
+            },
+            "Ascenseurs": {
+                "Nombre ascenseurs total": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_ASCENSEURS_NBTOTAL_ETABLISSEMENT"
+                },
+                "Nombre ascenseurs de type AS4": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_ASCENSEURS_NBAS4_ETABLISSEMENT"
+                }
+            },
+            "Moyens de secours": {
+                "Colonnes s\u00e8ches": {
+                    "value": "0",
+                    "type": "tinyint",
+                    "key": "DESCTECH_MOYENSSECOURS_COLONNESSECHES_ETABLISSEMENT"
+                },
+                "Colonnes humides": {
+                    "value": "0",
+                    "type": "tinyint",
+                    "key": "DESCTECH_MOYENSSECOURS_COLONNESHUMIDES_ETABLISSEMENT"
+                },
+                "RIA": {
+                    "value": "1",
+                    "type": "tinyint",
+                    "key": "DESCTECH_MOYENSSECOURS_RIA_ETABLISSEMENT"
+                },
+                "Sprinkleur": {
+                    "value": "1",
+                    "type": "tinyint",
+                    "key": "DESCTECH_MOYENSSECOURS_SPRINKLEUR_ETABLISSEMENT"
+                },
+                "Brouillard d'eau": {
+                    "value": "0",
+                    "type": "tinyint",
+                    "key": "DESCTECH_MOYENSSECOURS_BROUILLARDEAU_ETABLISSEMENT"
+                }
+            },
+            "PC S\u00e9curit\u00e9": {
+                "Pr\u00e9sence": {
+                    "value": "0",
+                    "type": "tinyint",
+                    "key": "DESCTECH_PCSECU_PRESENCE_ETABLISSEMENT"
+                },
+                "Localisation": {
+                    "value": "",
+                    "type": "text",
+                    "key": "DESCTECH_PCSECU_LOCALISATION_ETABLISSEMENT"
+                }
+            },
+            "SSI": {
+                "Pr\u00e9sence": {
+                    "value": "1",
+                    "type": "tinyint",
+                    "key": "DESCTECH_SSI_PRESENCE_ETABLISSEMENT"
+                },
+                "Cat\u00e9gorie SSI": {
+                    "value": "A",
+                    "type": "char",
+                    "key": "DESCTECH_SSI_CATEGORIE_ETABLISSEMENT"
+                },
+                "Alarme type": {
+                    "value": "1",
+                    "type": "char",
+                    "key": "DESCTECH_SSI_ALARME_TYPE_ETABLISSEMENT"
+                }
+            },
+            "Service de s\u00e9curit\u00e9": {
+                "Personne qualifi\u00e9e d\u00e9sign\u00e9e (EL18)": {
+                    "value": "1",
+                    "type": "tinyint",
+                    "key": "DESCTECH_SERVICESECU_EL18_ETABLISSEMENT"
+                },
+                "Personnels d\u00e9sign\u00e9s": {
+                    "value": "1",
+                    "type": "tinyint",
+                    "key": "DESCTECH_SERVICESECU_PERSONNELSDESIGNES_ETABLISSEMENT"
+                },
+                "Agent de s\u00e9curit\u00e9": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_SERVICESECU_AGENTDESECU_ETABLISSEMENT"
+                },
+                "Chef d'\u00e9quipe s\u00e9curit\u00e9": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_SERVICESECU_CHEFEQUIPE_ETABLISSEMENT"
+                },
+                "Chef de service s\u00e9curit\u00e9": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_SERVICESECU_CHEFDESERVICESECU_ETABLISSEMENT"
+                },
+                "Sapeurs Pompiers": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_SERVICESECU_SP_ETABLISSEMENT"
+                },
+                "Commentaire sur les SP": {
+                    "value": "",
+                    "type": "text",
+                    "key": "DESCTECH_SERVICESECU_COMMENTAIRESP_ETABLISSEMENT"
+                }
+            },
+            "D\u00e9fense incendie": {
+                "Nombre de point d'eau": {
+                    "value": "3",
+                    "type": "int",
+                    "key": "DESCTECH_DEFENSE_PTEAU_ETABLISSEMENT"
+                },
+                "Volume des points d'eau (m3)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_DEFENSE_VOLUMEPTEAU_ETABLISSEMENT"
+                },
+                "Commentaires sur le \/ les points d'eau naturel": {
+                    "value": "Assurer un d\u00e9bit simultan\u00e9 d\u2019eau d\u2019extinction sur les hydrants de 240 m\u00e8tres cubes par heure ; le premier hydrant se trouvant \u00e0 moins de 150 m de l\u2019entr\u00e9e du magasin. Dans la n\u00e9gative le d\u00e9bit offert par le r\u00e9seau devra \u00eatre compl\u00e9t\u00e9 par une r\u00e9serve artificielle dont le volume sera \u00e9quivalent au diff\u00e9renciel constat\u00e9 ",
+                    "type": "text",
+                    "key": "DESCTECH_DEFENSE_PTEAUCOMMENTAIRE_ETABLISSEMENT"
+                },
+                "PI": {
+                    "value": "3",
+                    "type": "int",
+                    "key": "DESCTECH_DEFENSE_PI_ETABLISSEMENT"
+                },
+                "BI": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_DEFENSE_BI_ETABLISSEMENT"
+                },
+                "D\u00e9bit simultan\u00e9 (m3\/h)": {
+                    "value": "0",
+                    "type": "int",
+                    "key": "DESCTECH_DEFENSE_DEBITSIMULTANE_ETABLISSEMENT"
+                }
+            },
+            "Risques": {
+                "Risques naturels": {
+                    "value": "",
+                    "type": "text",
+                    "key": "DESCTECH_RISQUES_NATURELS_ETABLISSEMENT"
+                },
+                "Risques technologiques": {
+                    "value": "",
+                    "type": "text",
+                    "key": "DESCTECH_RISQUES_TECHNOLOGIQUES_ETABLISSEMENT"
+                }
+            }
+        }
+    },
+    "status": "success"
+}

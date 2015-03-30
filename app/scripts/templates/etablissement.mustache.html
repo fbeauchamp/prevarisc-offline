@@ -1,0 +1,527 @@
+{{#informations}}
+<div class="row">
+    <h1>{{LIBELLE_ETABLISSEMENTINFORMATIONS}}
+        <small>statut: {{LIBELLE_STATUT}}</small>
+    </h1>
+    {{#pieces_jointes}}
+    <a class="btn btn-default download" data-attachment-id="{{ID_PIECEJOINTE}}{{EXTENSION_PIECEJOINTE}}"><i class="fa  fa-download"></i> {{NOM_PIECEJOINTE}}</a>
+    {{/pieces_jointes}}
+
+    <div class="col-sm-6">
+        <!-- Classement de l'établissement -->
+        <h4 class="h4_subtitle">Classement</h4>
+        <dl class="dl-horizontal">
+            <dt>Genre</dt>
+            <dd>
+                <p>
+                    <strong>{{LIBELLE_GENRE}}</strong>
+                </p>
+            </dd>
+
+            <dt>Catégorie</dt>
+            <dd>
+                <p>{{LIBELLE_CATEGORIE}}</p>
+            </dd>
+
+
+            <dt>Périodicité</dt>
+            <dd>
+                <p>{{PERIODICITE_ETABLISSEMENTINFORMATIONS}} mois</p>
+            </dd>
+        </dl>
+
+        <!-- Activités de l'établissement -->
+        <h4 class="h4_subtitle">Activités </h4>
+        <dl class="dl-horizontal">
+            <!-- Type et activités -->
+            <dt>Types &amp; activités</dt>
+            <dd>
+                <ul class="unstyled">
+                    <li>
+                        <strong> {{LIBELLE_TYPEACTIVITE_PRINCIPAL}}</strong>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+
+        <!-- Rubriques -->
+
+        <!-- Les effectifs -->
+        <h4 class="h4_subtitle">Les effectifs</h4>
+        <dl class="dl-horizontal">
+            <!-- Effectif public -->
+            <dt>Public</dt>
+            <dd>
+                <p>{{EFFECTIFPUBLIC_ETABLISSEMENTINFORMATIONS}}</p>
+            </dd>
+
+            <!-- Effectif personnel -->
+            <dt>Personnel</dt>
+            <dd>
+                <p>{{EFFECTIFPERSONNEL_ETABLISSEMENTINFORMATIONS}}</p>
+            </dd>
+
+
+            <!-- Effectif justifant le classement (que pour les 5ème catégorie) -->
+        </dl>
+
+        {{/informations}}
+
+        <!-- Plan -->
+        <h4 class="h4_subtitle">Plans d'intervention</h4>
+        {{#plans}}
+        <p class="">plan plan </p>
+        {{/plans}}
+        {{^plans}}
+        <p class="muted text-center">Pas de plans disponible</p>
+        {{/plans}}
+
+        <!-- Etablissement lié -->
+    </div>
+
+    <!-- Carte de l'emplacement de l'établissement / informations  -->
+    <div class="col-sm-6">
+        <!-- Cartes et diaporama -->
+        <ul id="menu_nav" class="nav nav-tabs" style="margin: 0; padding: 0; border-bottom: none;">
+        </ul>
+        <div class="tab-content">
+
+
+        </div>
+
+        <h4 class="h4_subtitle">Adresse</h4>
+
+
+        <dl class="dl-horizontal">
+            <dt>Adresses</dt>
+            <dd>
+                {{#adresses}}
+                <table class="table table-condensed champ_adresse champs">
+                    <thead>
+                    <tr>
+                        <th>Localisation</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td> {{LIBELLE_RUE}} {{CODEPOSTAL_COMMUNE}} {{LIBELLE_COMMUNE}}</td>
+                        <td>Adresse postale</td>
+                    </tr>
+                    </tbody>
+                </table>
+                {{/adresses}}
+            </dd>
+        </dl>
+    </div>
+</div>
+{{#general}}
+<div class="row">
+    <h2>Descriptif</h2>
+
+    <p>{{DESCRIPTIF_HISTORIQUE_ETABLISSEMENT}}</p>
+
+    <div class="col-sm-6">
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Implantation</th>
+            </tr>
+            <tr>
+                <td>Surface emprise au sol (m²)</td>
+                <td>{{DESCTECH_IMPLANTATION_SURFACE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Surface de plancher (m²)</td>
+                <td>{{DESCTECH_IMPLANTATION_SHON_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Nombre de niveaux</td>
+                <td>{{DESCTECH_IMPLANTATION_NBNIVEAUX_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Plancher bas du dernier niveau (m)</td>
+                <td>{{DESCTECH_IMPLANTATION_PBDN_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Surface totale (m²)</td>
+                <td>{{DESCTECH_IMPLANTATION_SURFACETOTALE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Surface accessible au public (m²)</td>
+                <td>{{DESCTECH_IMPLANTATION_SURFACEACCPUBLIC_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Desserte</th>
+            </tr>
+            <tr>
+                <td>Nombre de façades accessibles</td>
+                <td>{{DESCTECH_DESSERTE_NBFACADELIBRE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Voie engin</td>
+                <td>{{DESCTECH_DESSERTE_VOIEENGIN_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Voie echelle</td>
+                <td>{{DESCTECH_DESSERTE_VOIEECHELLE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Espace libre</td>
+                <td>{{DESCTECH_DESSERTE_ESPACELIBRE_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Isolement par rapport aux tiers</th>
+            </tr>
+            <tr>
+                <td>Latéral CF (minute)</td>
+                <td>{{DESCTECH_ISOLEMENT_LATERALCF_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Superposé CF (minute)</td>
+                <td>{{DESCTECH_ISOLEMENT_SUPERPOSECF_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Vis-à-vis (m)</td>
+                <td>{{DESCTECH_ISOLEMENT_VISAVIS_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Stabilité au feu</th>
+            </tr>
+            <tr>
+                <td>Structure SF (minute)</td>
+                <td>{{DESCTECH_STABILITE_STRUCTURESF_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Plancher SF (minute)</td>
+                <td>{{DESCTECH_STABILITE_PLANCHERSF_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Distribution intérieure</th>
+            </tr>
+            <tr>
+                <td>Cloisonnement traditionnel</td>
+                <td>{{DESCTECH_DISTRIBUTION_CLOISONNEMENTTRAD_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Secteurs</td>
+                <td>{{DESCTECH_DISTRIBUTION_SECTEURS_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Compartiments</td>
+                <td>{{DESCTECH_DISTRIBUTION_COMPARTIMENTS_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Locaux à risques</th>
+            </tr>
+            <tr>
+                <td>Nombre de locaux à risques moyens</td>
+                <td>{{DESCTECH_LOCAUXARISQUE_NBRISQUESMOYENS_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Nombre de locaux à risques importants</td>
+                <td>{{DESCTECH_LOCAUXARISQUE_NBRISQUESIMPORTANTS_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Espaces d'attentes sécurisés</th>
+            </tr>
+            <tr>
+                <td>Nombre</td>
+                <td>{{DESCTECH_ESPACES_NOMBRE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Nombre de niveaux concernés</td>
+                <td>{{DESCTECH_ESPACES_NIVEAUCONCERNE_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Désenfumage</th>
+            </tr>
+            <tr>
+                <td>Naturel</td>
+                <td>{{DESCTECH_DESENFUMAGE_NATUREL_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Mecanique</td>
+                <td>{{DESCTECH_DESENFUMAGE_MECANIQUE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Commentaire</td>
+                <td>{{DESCTECH_DESENFUMAGE_COMMENTAIRE_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Chaufferies</th>
+            </tr>
+            <tr>
+                <td>Nombre</td>
+                <td>{{DESCTECH_CHAUFFERIES_NB_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Puissance max (kw)</td>
+                <td>{{DESCTECH_CHAUFFERIES_PUISSMAX_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Nombre de chaufferies 30kw</td>
+                <td>{{DESCTECH_CHAUFFERIES_NB30KW}}</td>
+            </tr>
+            <tr>
+                <td>Nombre de chaufferies 70kw</td>
+                <td>{{DESCTECH_CHAUFFERIES_NB70KW}}</td>
+            </tr>
+            <tr>
+                <td>Nombre de chaufferies 2mw</td>
+                <td>{{DESCTECH_CHAUFFERIES_NB2MW}}</td>
+            </tr>
+            <tr>
+                <td>Puissance totale (kw)</td>
+                <td>{{DESCTECH_CHAUFFERIES_PUISSANCETOTALE}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Localisation des coupures d'énergies</th>
+            </tr>
+            <tr>
+                <td>Gaz</td>
+                <td>{{DESCTECH_COUPURENRJ_GAZ_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Électricité</td>
+                <td>{{DESCTECH_COUPURENRJ_ELEC_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Photovoltaïque</td>
+                <td>{{DESCTECH_COUPURENRJ_PHOTOVOLTAIQUE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Autre</td>
+                <td>{{DESCTECH_COUPURENRJ_AUTRE_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Ascenseurs</th>
+            </tr>
+            <tr>
+                <td>Nombre ascenseurs total</td>
+                <td>{{DESCTECH_ASCENSEURS_NBTOTAL_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Nombre ascenseurs de type AS4</td>
+                <td>{{DESCTECH_ASCENSEURS_NBAS4_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Moyens de secours</th>
+            </tr>
+            <tr>
+                <td>Colonnes sèches</td>
+                <td>{{DESCTECH_MOYENSSECOURS_COLONNESSECHES_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Colonnes humides</td>
+                <td>{{DESCTECH_MOYENSSECOURS_COLONNESHUMIDES_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>RIA</td>
+                <td>{{DESCTECH_MOYENSSECOURS_RIA_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Sprinkleur</td>
+                <td>{{DESCTECH_MOYENSSECOURS_SPRINKLEUR_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Brouillard d'eau</td>
+                <td> {{DESCTECH_MOYENSSECOURS_BROUILLARDEAU_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">PC Sécurité</th>
+            </tr>
+            <tr>
+                <td>Présence</td>
+                <td>{{DESCTECH_PCSECU_PRESENCE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Localisation</td>
+                <td>{{DESCTECH_PCSECU_LOCALISATION_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">SSI</th>
+            </tr>
+            <tr>
+                <td>Présence</td>
+                <td>{{DESCTECH_SSI_PRESENCE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Catégorie SSI</td>
+                <td>{{DESCTECH_SSI_CATEGORIE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Alarme type</td>
+                <td>{{DESCTECH_SSI_ALARME_TYPE_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Service de sécurité</th>
+            </tr>
+            <tr>
+                <td>Personne qualifiée désignée (EL18)</td>
+                <td>{{DESCTECH_SERVICESECU_EL18_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Personnels désignés</td>
+                <td>{{DESCTECH_SERVICESECU_PERSONNELSDESIGNES_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Agent de sécurité</td>
+                <td>{{DESCTECH_SERVICESECU_AGENTDESECU_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Chef d'équipe sécurité</td>
+                <td>{{DESCTECH_SERVICESECU_CHEFEQUIPE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Chef de service sécurité</td>
+                <td>{{DESCTECH_SERVICESECU_CHEFDESERVICESECU_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Sapeurs Pompiers</td>
+                <td>{{DESCTECH_SERVICESECU_SP_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Commentaire sur les SP</td>
+                <td>{{DESCTECH_SERVICESECU_COMMENTAIRESP_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Défense incendie</th>
+            </tr>
+            <tr>
+                <td>Nombre de point d'eau</td>
+                <td>{{DESCTECH_DEFENSE_PTEAU_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Volume des points d'eau (m3)</td>
+                <td>{{DESCTECH_DEFENSE_VOLUMEPTEAU_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Commentaires sur le / les points d'eau naturel</td>
+                <td>{{DESCTECH_DEFENSE_PTEAUCOMMENTAIRE_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>PI</td>
+                <td>{{DESCTECH_DEFENSE_PI_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>BI</td>
+                <td>{{DESCTECH_DEFENSE_BI_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Débit simultané (m3/h)</td>
+                <td>{{DESCTECH_DEFENSE_DEBITSIMULTANE_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th colspan="2">Risques</th>
+            </tr>
+            <tr>
+                <td>Risques naturels</td>
+                <td>{{DESCTECH_RISQUES_NATURELS_ETABLISSEMENT}}</td>
+            </tr>
+            <tr>
+                <td>Risques technologiques</td>
+                <td>{{DESCTECH_RISQUES_TECHNOLOGIQUES_ETABLISSEMENT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/general}}

@@ -1,0 +1,5741 @@
+MAP
+  NAME "sdis"
+  EXTENT 715940 6558060 916694 6674185
+  UNITS METERS
+  SIZE 1186 729
+  MAXSIZE 4096
+  FONTSET "fonts/fonts.txt"
+  SYMBOLSET "symbols/symbol.6.0.3.sym"
+  #IMAGECOLOR 255 255 255
+  IMAGETYPE AGG
+  DEFRESOLUTION 96
+  RESOLUTION 96
+  STATUS ON 
+
+  OUTPUTFORMAT
+	NAME "png"
+	DRIVER AGG/PNG
+	IMAGEMODE RGBA
+	FORMATOPTION "QUANTIZE_FORCE=ON"
+	FORMATOPTION "QUANTIZE_DITHER=OFF"
+	FORMATOPTION "QUANTIZE_COLORS=256"
+#	TRANSPARENT ON
+  END
+
+  OUTPUTFORMAT
+	NAME "AGG"
+	DRIVER AGG/PNG
+	IMAGEMODE RGB
+	FORMATOPTION "QUANTIZE_FORCE=ON"
+	FORMATOPTION "QUANTIZE_DITHER=OFF"
+	FORMATOPTION "QUANTIZE_COLORS=256"
+  END
+
+  LEGEND
+	IMAGECOLOR 255 255 250
+	KEYSIZE 20 10
+	KEYSPACING 5 5
+	LABEL
+		ANGLE 0.000000
+		FONT "verdana"
+		MAXSIZE 256
+		MINSIZE 4
+		SIZE 7
+		TYPE TRUETYPE
+		BUFFER 0
+		COLOR 0 0 0
+		FORCE TRUE
+		MINDISTANCE -1
+		MINFEATURESIZE -1
+		OFFSET 0 0
+		PARTIALS FALSE
+	END
+	POSITION LL
+	STATUS OFF
+	TRANSPARENT FALSE
+  END
+
+  QUERYMAP
+	COLOR 255 255 0
+	SIZE -1 -1
+	STATUS OFF
+	STYLE HILITE
+  END
+
+  REFERENCE
+	COLOR -1 -1 -1
+	EXTENT 715940 6558060 916694 6674185
+	IMAGE "../carto/images/nav/refmap.gif"
+	OUTLINECOLOR 0 0 0
+	SIZE 110 72
+	STATUS ON
+	MARKER 0
+	MARKERSIZE 0
+	MINBOXSIZE 3
+	MAXBOXSIZE 0
+  END
+
+  SCALEBAR
+	COLOR 0 0 0
+	IMAGECOLOR 255 255 255
+	OUTLINECOLOR 0 0 0
+	INTERVALS 2
+	LABEL
+		SIZE TINY
+		TYPE BITMAP
+		BUFFER 0
+		COLOR 0 0 0
+		FORCE FALSE
+		MINDISTANCE -1
+		MINFEATURESIZE -1
+		OFFSET 0 0
+		PARTIALS TRUE
+	END
+	POSITION LL
+	SIZE 100 3
+	STATUS ON
+	STYLE 0
+	UNITS KILOMETERS
+  END
+
+  WEB
+	ERROR "/info.html"
+	IMAGEPATH "/var/www/carto/tmp/"
+	IMAGEURL "/tmp/"
+	QUERYFORMAT text/html
+	LEGENDFORMAT text/html
+	BROWSEFORMAT text/html
+	TEMPLATE "printable.html"
+	METADATA
+		"wms_title" "WMS Demo Server"
+		"wms_onlineresource" "http://srvgeoweb/cgi-bin/mapserv?map=/var/www/map/main.map&"  
+		"wms_feature_info_mime_type" "text/html"
+		#"http://192.6.1.25/cgi-bin/mapserv?map=wms.map&"
+		"wms_srs" "EPSG:2154"
+	"ows_enable_request"   "*"
+	END
+  END
+
+PROJECTION
+  "init=epsg:2154"
+END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom FROM (select * FROM commune) AS foo USING UNIQUE gid USING SRID = 2154"
+	STATUS ON    
+	GROUP "Limites administratives"
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,box2d(the_geom) as bbox,groupement,departement,insee FROM commune "
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "0"
+		"TABLE" "commune"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Limites administratives"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Commune"
+		"DESCRIPTION" "Commune"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CHAMP_INSEE" "insee"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom;insee;code_gipsi;groupement;secteur_1er_appel;departement;canton"
+		"INFO_LIBELLE" "Nom;INSEE;Code GIPSI;Groupement;1er appel;Département;Canton"
+		"DETAILLEE_CHAMP" "nom;insee;code_gipsi;groupement;secteur_1er_appel;departement;canton"
+		"DETAILLEE_LIBELLE" "Nom;Code INSEE;Code GIPSI;Groupement;Secteur de 1er appel;Département;Canton"
+		"PRINT_RESULT_CHAMP" "nom;insee;code_gipsi;groupement;secteur_1er_appel;departement;canton"
+		"PRINT_RESULT_LIBELLE" "Nom;Code INSEE;Code GIPSI;Groupement;Secteur de 1er appel;Département;Canton"
+		"wfs_title"    		"commune" 
+		"wfs_typename" "commune"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "commune"
+	HEADER "templates/header.html"
+	TEMPLATE "templates/foo.htm"
+	DUMP TRUE
+	OPACITY 100
+	TYPE POLYGON
+	UNITS METERS
+	CLASSITEM "groupement"
+	LABELITEM "nom"
+	LABELMAXSCALE 280000
+	CLASS
+		NAME "Commune"
+		EXPRESSION /SUD|CENTRE|NORD|EST|OUEST/
+		STYLE
+#			COLOR 250 242 242
+			OUTLINECOLOR 190 190 190
+			SIZE 1
+			SYMBOL "square"
+		END
+		LABEL
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			MAXLENGTH 10
+			WRAP ' '
+			FONT "arial_narrow_italique"
+			COLOR 100 100 100
+			SIZE 8
+			POSITION CC
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "Commune hors département"
+		EXPRESSION /DEPT 01|DEPT 39|DEPT 21|DEPT 89|DEPT 58|DEPT 03|DEPT 42|DEPT 69/
+		STYLE
+#			COLOR 224 224 224
+			OUTLINECOLOR 240 240 240
+			SIZE 1
+			SYMBOL "square"
+		END
+		LABEL
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			MAXLENGTH 10
+			WRAP ' '
+			FONT "arial_narrow_italique"
+			COLOR 100 100 100
+			SIZE 8
+			POSITION CC
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from canton) as foo using unique gid using SRID=2154"
+	GROUP "Limites administratives"
+	STATUS OFF
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,conseiller_general,box2d(the_geom) as bbox FROM canton "
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "1"
+		"TABLE" "canton"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Limites administratives"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Canton"
+		"DESCRIPTION" "Canton"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom;conseiller_general;annee_de_renouvellement"
+		"INFO_LIBELLE" "Nom;Conseiller général;Année de renouvellement"
+		"DETAILLEE_CHAMP" "nom;conseiller_general;annee_de_renouvellement"
+		"DETAILLEE_LIBELLE" "Nom;Conseiller général;Année de renouvellement"
+		"PRINT_RESULT_CHAMP" "nom;conseiller_general;annee_de_renouvellement"
+		"PRINT_RESULT_LIBELLE" "Nom;Conseiller général;Année de renouvellement"
+		"wfs_title"    		"canton" 
+		"wfs_typename" "canton"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "canton"
+	HEADER "templates/header.html"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		NAME "Canton"
+ 		STYLE
+			OUTLINECOLOR 120 120 120
+			SIZE 1
+			SYMBOL "dashed_long"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from departement) as foo using unique gid using SRID=2154"
+	GROUP "Limites administratives"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,box2d(the_geom) as bbox FROM departement"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "2"
+		"TABLE" "departement"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Limites administratives"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Département"
+		"DESCRIPTION" "Département"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom"
+		"INFO_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "nom"
+		"DETAILLEE_LIBELLE" "Nom"
+		"PRINT_RESULT_CHAMP" "nom"
+		"PRINT_RESULT_LIBELLE" "Nom"
+		"wfs_title"    		"departement" 
+		"wfs_typename" "departement"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "departement"
+	HEADER "templates/header.html"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		NAME "Département"
+		STYLE
+			OUTLINECOLOR 90 90 90
+			SIZE 2
+			SYMBOL "line"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+		GROUP "Fond IGN"
+		STATUS OFF
+		METADATA
+			"INDEX_LAYER" "100"
+			"CLIENTLAYER" "1"
+			"LEGENDE" "ON"
+			"GROUP" "ON"
+			"LIBELLE_GROUP" "Fond IGN"
+			"SHOW" "YES"
+			"SOURCE" "©IGN-Scan100® - Reproduction interdite"
+		END
+		NAME "Scan100"
+		PROJECTION
+			"init=epsg:2154"
+		END
+		MAXSCALE 500000
+		MINSCALE 50001
+		TEMPLATE "templates/foo.htm"
+		TILEINDEX "/usr/local/data/scan100/scan100.shp"
+		TILEITEM "location"
+		TYPE RASTER
+		UNITS METERS
+  END
+
+  LAYER
+		GROUP "Fond IGN"
+		STATUS OFF
+		METADATA
+			"INDEX_LAYER" "101"
+			"CLIENTLAYER" "1"
+			"LEGENDE" "ON"
+			"GROUP" "ON"
+			"LIBELLE_GROUP" "Fond IGN"
+			"SHOW" "YES"
+			"SOURCE" "©IGN-Scan25® - Reproduction interdite"
+		END
+		NAME "Scan25"
+		PROJECTION
+			"init=epsg:2154"
+		END
+		MAXSCALE 50001
+		TEMPLATE "templates/foo.htm"
+		TILEINDEX "/usr/local/data/scan25_l93/scan25.shp"
+		TILEITEM "location"
+		TYPE RASTER
+		UNITS METERS
+  END
+
+  LAYER
+		GROUP "Fond IGN"
+		STATUS OFF
+		METADATA
+			"INDEX_LAYER" "102"
+			"CLIENTLAYER" "1"
+			"LEGENDE" "ON"
+			"GROUP" "ON"
+			"LIBELLE_GROUP" "Fond IGN"
+			"SHOW" "YES"
+			"SOURCE" "©IGN-BDOrtho® - Reproduction interdite"
+		END
+		NAME "bdortho"
+		PROJECTION
+			"init=epsg:2154"
+		END
+		MAXSCALE 15001
+#		MINSCALE 499
+		TEMPLATE "templates/foo.htm"
+		TILEINDEX "/usr/local/data/bdorthojpeg/bdortho.shp"
+		TILEITEM "location"
+		TYPE RASTER
+		UNITS METERS
+  END
+  
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (SELECT * FROM groupement) as foo using unique gid using SRID=2154"
+	GROUP "Limites operationnelles"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,box2d(the_geom) as bbox FROM groupement"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "4"
+		"TABLE" "groupement"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Limites opérationnelles"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Groupement"
+		"DESCRIPTION" "Groupement"
+		"SOURCE" "©SDIS71"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom"
+		"INFO_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "nom"
+		"DETAILLEE_LIBELLE" "Nom"
+		"PRINT_RESULT_CHAMP" "nom"
+		"PRINT_RESULT_LIBELLE" "Nom"
+		"wfs_title"    		"groupement" 
+		"wfs_typename" "groupement"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "groupement"
+	HEADER "templates/header.html"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		NAME "Groupement"
+		STYLE
+			OUTLINECOLOR 50 50 50
+			SIZE 2
+			SYMBOL "dashed_point1"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (SELECT * FROM secteur_rattachement) as foo using unique gid using SRID=2154"
+	GROUP "Limites operationnelles"
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,box2d(the_geom) as bbox FROM secteur_rattachement"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "5"
+		"TABLE" "secteur_rattachement"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Limites opérationnelles"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singlesymbol"
+		"LIBELLE_NAME" "Secteur de rattachement"
+		"DESCRIPTION" "Secteur de rattachement"
+		"SOURCE" "©SDIS71"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom"
+		"INFO_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "nom"
+		"DETAILLEE_LIBELLE" "Nom"
+		"PRINT_RESULT_CHAMP" "nom"
+		"PRINT_RESULT_LIBELLE" "Nom"
+		"wfs_title"    		"secteur_rattachement" 
+		"wfs_typename" "secteur_rattachement"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "premier_appel"
+	STATUS ON
+	HEADER "templates/header.html"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		NAME "Secteur de rattachement"
+		STYLE
+			OUTLINECOLOR 0 0 0
+			SIZE 1
+			SYMBOL "dashed_point4"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from zone_urbaine) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,box2d(the_geom) as bbox FROM zone_urbaine"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "6"
+		"TABLE" "zone_urbaine"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Zone urbaine"
+		"DESCRIPTION" "Zone urbaine"
+		"SOURCE" "©Navteq"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom"
+		"INFO_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "nom"
+		"DETAILLEE_LIBELLE" "Nom"
+		"PRINT_RESULT_CHAMP" "nom"
+		"PRINT_RESULT_LIBELLE" "Nom"
+		"wfs_title"    		"zone_urbaine" 
+		"wfs_typename" "zone_urbaine"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "zone_urbaine"
+	OPACITY 50
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	LABELITEM "nom"
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 300000
+		NAME "Zone urbaine"
+		STYLE
+			COLOR 212 212 212
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from occsol_cimetiere) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,nature,box2d(the_geom) as bbox FROM occsol_cimetiere"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "7"
+		"TABLE" "occsol_cimetiere"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Cimetière"
+		"DESCRIPTION" "Cimetière"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom;nature"
+		"INFO_LIBELLE" "Nom;Nature"
+		"DETAILLEE_CHAMP" "nom;nature"
+		"DETAILLEE_LIBELLE" "Nom;Nature"
+		"PRINT_RESULT_CHAMP" "nom;nature"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature"
+		"wfs_title"    		"cimetiere" 
+		"wfs_typename" "cimetiere"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "cimetiere"
+	OPACITY 50
+	HEADER "templates/header.html"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	LABELITEM "nom"
+	LABELMAXSCALE 10001
+	CLASS
+		MAXSCALEDENOM 50000
+		NAME "Cimetière"
+		STYLE
+			SIZE 20
+			SYMBOL "cimetiere"
+			OUTLINECOLOR 0 0 0
+		END
+		LABEL
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			MAXLENGTH 10
+			WRAP ' '
+			FONT "arial_narrow"
+			COLOR 50 50 50
+			SIZE 7
+			POSITION CC
+		END 
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from occsol_surface_activite) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,nature,box2d(the_geom) as bbox FROM  occsol_surface_activite"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "8"
+		"TABLE" "occsol_surface_activite"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Surface d'activité"
+		"DESCRIPTION"	"Surface d'activité"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom;nature"
+		"RESULT_LIBELLE" "Nom;Nature"
+		"INFO_CHAMP" "nom;nature"
+		"INFO_LIBELLE" "Nom;Nature"
+		"DETAILLEE_CHAMP" "nom;nature"
+		"DETAILLEE_LIBELLE" "Nom;Nature"
+		"PRINT_RESULT_CHAMP" "nom;nature"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature"
+		"wfs_title"    		"occsol_surface_activite" 
+		"wfs_typename" "occsol_surface_activite"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "occsol_surface_activite"
+	OPACITY 50
+	HEADER "templates/header.html"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 50001
+		NAME "Surface activité"
+		STYLE
+			COLOR 201 147 255
+			SIZE 1
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from occsol_aerodrome) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,nature,box2d(the_geom) as bbox FROM occsol_aerodrome"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "9"
+		"TABLE" "occsol_aerodrome"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Piste d'aérodrome"
+		"DESCRIPTION" "Piste d'aérodrome"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom;nature"
+		"INFO_LIBELLE" "Nom;Nature"
+		"DETAILLEE_CHAMP" "nom;nature"
+		"DETAILLEE_LIBELLE" "Nom;Nature"
+		"PRINT_RESULT_CHAMP" "nom;nature"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature"
+		"wfs_title"    		"aerodrome" 
+		"wfs_typename" "aerodrome"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "aerodrome"
+	OPACITY 50
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 50001
+		NAME "Piste aérodrome"
+		STYLE
+			COLOR 128 128 128
+			SIZE 1
+			SYMBOL "square"
+		END
+		STYLE
+			OUTLINECOLOR 100 100 100
+			SIZE 1
+			SYMBOL "line"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom FROM (SELECT * FROM vegetation) AS foo USING UNIQUE gid USING SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "10"
+		"TABLE" "vegetation"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Végétation"
+		"DESCRIPTION" "Végétation"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"INFO_CHAMP" "nom"
+		"INFO_LIBELLE" "Nom"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "gid;nom"
+		"DETAILLEE_LIBELLE" "Gid;Nom"
+		"PRINT_RESULT_CHAMP" "nom"
+		"PRINT_RESULT_LIBELLE" "Nom"
+		"wfs_title"    		"vegetation" 
+		"wfs_typename" "vegetation"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "vegetation"
+	OPACITY 70
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 50001
+		NAME "végétation"
+		STYLE
+			COLOR 110 216 117
+			OUTLINECOLOR 110 216 117
+			SIZE 4
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from batiment_201204) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "11"
+		"TABLE" "batiment_201204"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Bâtiment"
+		"DESCRIPTION" "Bâtiment"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom;nature"
+		"RESULT_LIBELLE" "Nom;Nature"
+		"INFO_CHAMP" "nom;nature;categorie;hauteur"
+		"INFO_LIBELLE" "Nom;Nature;Catégorie;Hauteur"
+		"DETAILLEE_CHAMP" "nom;nature;categorie;hauteur"
+		"DETAILLEE_LIBELLE" "Nom;Nature;Catégorie;Hauteur"
+		"PRINT_RESULT_CHAMP" "nom;nature;categorie;hauteur"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature;Catégorie;Hauteur"
+		"wfs_title"    		"batiment" 
+		"wfs_typename" "batiment"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "batiment"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Bâtiment"
+		STYLE
+			COLOR 173 173 173
+			OUTLINECOLOR 160 160 160
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from occsol_reservoir) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "12"
+		"TABLE" "occsol_reservoir"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Réservoir"
+		"DESCRIPTION" "Réservoir"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nature"
+		"RESULT_LIBELLE" "Nature"
+		"INFO_CHAMP" "nature;hauteur;nom"
+		"INFO_LIBELLE" "Nature;Hauteur;Nom"
+		"DETAILLEE_CHAMP" "nature;hauteur;nom"
+		"DETAILLEE_LIBELLE" "Nature;Hauteur;Nom"
+		"PRINT_RESULT_CHAMP" "nature;hauteur;nom"
+		"PRINT_RESULT_LIBELLE" "Nature;Hauteur;Nom"
+		"wfs_title"    		"reservoir" 
+		"wfs_typename" "reservoir"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reservoir"
+	OPACITY 100
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 50001
+		NAME "Réservoir - emprise"
+		STYLE
+			COLOR 35 108 255
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from hydrographie_surface) as foo using unique gid using SRID=2154"
+	GROUP "Hydrographie"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,nature,box2d(the_geom) as bbox FROM hydrographie_surface"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "13"
+		"TABLE" "hydrographie_surface"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Hydrographie"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Lac, Etang"
+		"DESCRIPTION" "Lac, Etang"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom;nature;regime_eaux;altitude"
+		"INFO_LIBELLE" "Nom;Nature;Regime des eaux;Altitude(m)"
+		"DETAILLEE_CHAMP" "nom;nature;regime_eaux;altitude"
+		"DETAILLEE_LIBELLE" "Nom;Nature;Regime des eaux;Altitude(m)"
+		"PRINT_RESULT_CHAMP" "nom;nature;regime_eaux;altitude"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature;Regime des eaux;Altitude(m)"
+		"wfs_title"    		"surface hydrographique" 
+		"wfs_typename" "surface hydrographique"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "surface hydrographique"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	LABELITEM "nom"
+	LABELMAXSCALE 25001
+	CLASS
+		NAME "Surface hydrographique"
+		MAXSCALEDENOM 50001
+		STYLE
+			ANGLE 360
+			OPACITY 100
+			COLOR 119 164 255
+			SIZE 1
+			SYMBOL "square"
+		END
+		LABEL
+			ANGLE 0
+			POSITION CC
+			TYPE TRUETYPE
+			FORCE TRUE
+			COLOR 0 0 200
+			FONT "arial_narrow_italique"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from construction_lineaire) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS OFF
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,nature,box2d(the_geom) as bbox FROM construction_lineaire"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "14"
+		"TABLE" "construction_lineaire"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Construction linéaire"
+		"DESCRIPTION" "Construction lineaire"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nature"
+		"RESULT_LIBELLE" "Nature"
+		"INFO_CHAMP" "nom;nature;hauteur"
+		"INFO_LIBELLE" "Nom;Nature;Hauteur"
+		"DETAILLEE_CHAMP" "nom;nature;hauteur"
+		"DETAILLEE_LIBELLE" "Nom;Nature;Hauteur"
+		"PRINT_RESULT_CHAMP" "nom;nature;hauteur"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature;Hauteur"
+		"wfs_title"    		"construction lineaire" 
+		"wfs_typename" "construction lineaire"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "construction lineaire"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	UNITS METERS
+	CLASSITEM "nature"
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Construction linéaire"
+		STYLE
+			COLOR 0 0 0
+			SIZE 4
+			SYMBOL "line"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from hydrographie_lineaire) as foo using unique gid using SRID=2154"
+	GROUP "Hydrographie"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,regime_eaux,case when fictif=1 then 'fictif' end as fictif,case when artificialise=1 then 'artifialisé' end as artificialise,box2d(the_geom) as bbox FROM hydrographie_lineaire"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "15"
+		"TABLE" "hydrographie_lineaire"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Hydrographie"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Réseau hydrographique"
+		"DESCRIPTION" "Réseau hydrographique"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom;artificialise;franchissement;regime_eaux"
+		"INFO_LIBELLE" "Nom;Artificialisé;Franchissement;Régime des eaux"
+		"DETAILLEE_CHAMP" "nom;artificialise;franchissement;regime_eaux"
+		"DETAILLEE_LIBELLE" "Nom;Artificialisé;Franchissement;Régime des eaux"
+		"PRINT_RESULT_CHAMP" "nom;artificialise;franchissement;regime_eaux"
+		"PRINT_RESULT_LIBELLE" "Nom;Artificialisé;Franchissement;Régime des eaux"
+		"wfs_title"    		"Hydrographie_lineaire" 
+		"wfs_typename" "Hydrographie_lineaire"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "Hydrographie_lineaire"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	UNITS METERS
+	LABELITEM "nom"
+	LABELMAXSCALE 25001
+	CLASS
+		NAME "Cours d'eau permanent"
+		MAXSCALEDENOM 75000
+		EXPRESSION ('[regime_eaux]' eq 'Permanent' OR '[regime_eaux]' eq '')
+		STYLE
+			OPACITY 100
+			OUTLINECOLOR 119 164 255
+			SIZE 1
+			SYMBOL "line"
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 30
+			COLOR 0 0 200
+			FONT "arial_narrow_italique"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "Cours d'eau intermittant"
+		MAXSCALEDENOM 75000
+		EXPRESSION ('[regime_eaux]' eq 'Intermittent')
+		STYLE
+			OPACITY 100
+			OUTLINECOLOR 119 164 255
+			SIZE 1
+			SYMBOL "dashed_long"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from occsol_construction_surfacique) as foo using unique gid using SRID=2154"
+	GROUP "Occupation du sol"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "16"
+		"TABLE" "occsol_construction_surfacique"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Occupation du sol"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Construction surfacique"
+		"DESCRIPTION" "Construction surfacique"
+		"SOURCE" "©IGN-BDTopo® - Reproduction interdite"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom;nature"
+		"RESULT_LIBELLE" "Nom;Nature"
+		"INFO_CHAMP" "nom;nature"
+		"INFO_LIBELLE" "Nom;Nature"
+		"DETAILLEE_CHAMP" "nom;nature"
+		"DETAILLEE_LIBELLE" "Nom;Nature"
+		"PRINT_RESULT_CHAMP" "nom;nature"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature"
+		"wfs_title"    		"construction surfacique" 
+		"wfs_typename" "construction surfacique"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "construction surfacique"
+	OPACITY 60
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 50001
+		NAME "Construction surfacique"
+		STYLE
+			COLOR 255 124 84
+			OUTLINECOLOR 255 124 84
+			SIZE 1
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from route_union) as foo using unique id_troncon using SRID=2154"
+	FILTER "sous_type IN('Voie piétonne')"
+	GROUP "Reseaux de transports"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom_carto as nom,code_commune,box2d(GEOMUNION(the_geom)) as bbox FROM route_union  WHERE sous_type IN('Voie piétonne') GROUP BY id_gipsi,nom_carto,code_commune"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "17"
+		"TABLE" "route_union"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Réseaux de transport"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Voie piétonne"
+		"DESCRIPTION" "Réseau routier"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "id_troncon"
+		"INFO_CHAMP" "nom_carto;id_gipsi;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"INFO_LIBELLE" "Nom;ID Gipsi;Catégorie;Code commune;Sens de circulation;Date début indisponible;Date fin indisponible;Motif"
+		"RESULT_CHAMP" "nom_carto"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"DETAILLEE_LIBELLE" "ID gipsi;Nom;Catégorie;Commune;Sens de circulation;Début d'insidponibilité; Fin d'indisponibilité;motif"
+		"PRINT_RESULT_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"PRINT_RESULT_LIBELLE" "nom;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"wfs_title"    		"reseau_routiervp" 
+		"wfs_typename" "reseau_routiervp"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reseau_routiervp"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	LABELITEM "nom_carto"
+	LABELCACHE ON
+	UNITS METERS
+	CLASSITEM "sens_de_circulation"
+	CLASS
+		NAME "voie piétonne"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		STYLE
+			COLOR 255 160 160
+			WIDTH 3
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 1
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 2
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 2
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 2
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 160 160
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 2
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 160 160
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 2
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 160 160
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 2
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+
+	CLASS
+		NAME "voie piétonne-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 6
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND ('[nature]' ne 'PLACE' OR '[nature]' ne 'SQUA' OR '[nature]' ne 'ROND' OR '[nature]' ne 'CARR' OR '[nature]' ne 'LOTI' OR '[nature]' ne 'AIRE' OR '[nature]' ne 'PONT' OR '[nature]' ne 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "voie piétonne"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND ('[nature]' ne 'PLACE' OR '[nature]' ne 'SQUA' OR '[nature]' ne 'ROND' OR '[nature]' ne 'CARR' OR '[nature]' ne 'LOTI' OR '[nature]' ne 'AIRE' OR '[nature]' ne 'PONT' OR '[nature]' ne 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+
+	CLASS
+		NAME "voie piétonne"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND ('[nature]' ne 'PLACE' OR '[nature]' ne 'SQUA' OR '[nature]' ne 'ROND' OR '[nature]' ne 'CARR' OR '[nature]' ne 'LOTI' OR '[nature]' ne 'AIRE' OR '[nature]' ne 'PONT' OR '[nature]' ne 'RESI'))
+		STYLE
+			COLOR 255 160 160
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 224 160
+			WIDTH 6
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from route_union) as foo using unique id_troncon using SRID=2154"
+	FILTER "sous_type IN('Niveau 5')"
+	GROUP "Reseaux de transports"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom_carto as nom,code_commune,box2d(GEOMUNION(the_geom)) as bbox FROM route_union  WHERE sous_type IN('Niveau 5') GROUP BY id_gipsi,nom_carto,code_commune"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "18"
+		"TABLE" "route_union"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Réseaux de transport"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Route - Niveau 5"
+		"DESCRIPTION" "Réseau routier"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "id_troncon"
+		"INFO_CHAMP" "nom_carto;id_gipsi;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"INFO_LIBELLE" "Nom;ID Gipsi;Catégorie;Code commune;Sens de circulation;Date début indisponible;Date fin indisponible;Motif"
+		"RESULT_CHAMP" "nom_carto"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"DETAILLEE_LIBELLE" "ID gipsi;Nom;Catégorie;Commune;Sens de circulation;Début d'insidponibilité; Fin d'indisponibilité;motif"
+		"PRINT_RESULT_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"PRINT_RESULT_LIBELLE" "nom;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"wfs_title"    		"reseau_routier5" 
+		"wfs_typename" "reseau_routier5"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reseau_routier5"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	LABELITEM "nom_carto"
+	LABELCACHE ON
+	UNITS METERS
+	CLASS
+		NAME "niveau 5 - route"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 2
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 10
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5 - place"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 208 208 208
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 2
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 10
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5 - chemin"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION ('[route_goudronnee]' eq 'N')
+		STYLE
+			COLOR 112 93 49
+			WIDTH 3
+		END
+		STYLE
+			COLOR 167 140 73
+			WIDTH 1
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'F' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'F' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'T' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'T' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'B' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 4
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'B' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 4
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'N' AND '[sens_de_circulation]' eq 'F')
+		STYLE
+			COLOR 112 93 49
+			WIDTH 5
+		END
+		STYLE
+			COLOR 188 156 83
+			WIDTH 3
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'N' AND '[sens_de_circulation]' eq 'T')
+		STYLE
+			COLOR 112 93 49
+			WIDTH 5
+		END
+		STYLE
+			COLOR 188 156 83
+			WIDTH 3
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'N' AND '[sens_de_circulation]' eq 'B')
+		STYLE
+			COLOR 153 125 67
+			WIDTH 5
+		END
+		STYLE
+			COLOR 206 171 90
+			WIDTH 3
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'F' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'F' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'T' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'T' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'B' AND ('[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI'))
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 8
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'Y' AND '[sens_de_circulation]' eq 'B' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 255 255 255
+			WIDTH 8
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'N' AND '[sens_de_circulation]' eq 'F')
+		STYLE
+			COLOR 112 93 49
+			WIDTH 9
+		END
+		STYLE
+			COLOR 188 156 83
+			WIDTH 7
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'N' AND '[sens_de_circulation]' eq 'T')
+		STYLE
+			COLOR 112 93 49
+			WIDTH 9
+		END
+		STYLE
+			COLOR 188 156 83
+			WIDTH 7
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 5"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[route_goudronnee]' eq 'N' AND '[sens_de_circulation]' eq 'B')
+		STYLE
+			COLOR 153 125 67
+			WIDTH 9
+		END
+		STYLE
+			COLOR 206 171 90
+			WIDTH 7
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 8
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from route_union) as foo using unique id_troncon using SRID=2154"
+	FILTER "sous_type IN('Niveau 4')"
+	GROUP "Reseaux de transports"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom_carto as nom,code_commune,box2d(GEOMUNION(the_geom)) as bbox FROM route_union  WHERE sous_type IN('Niveau 4') GROUP BY id_gipsi,nom_carto,code_commune"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "19"
+		"TABLE" "route_union"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Réseaux de transport"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Route - Niveau 4"
+		"DESCRIPTION" "Réseau routier"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "id_troncon"
+		"INFO_CHAMP" "nom_carto;id_gipsi;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"INFO_LIBELLE" "Nom;ID Gipsi;Catégorie;Code commune;Sens de circulation;Date début indisponible;Date fin indisponible;Motif"
+		"RESULT_CHAMP" "nom_carto"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"DETAILLEE_LIBELLE" "ID gipsi;Nom;Catégorie;Commune;Sens de circulation;Début d'insidponibilité; Fin d'indisponibilité;motif"
+		"PRINT_RESULT_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"PRINT_RESULT_LIBELLE" "nom;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"wfs_title"    		"reseau_routier4" 
+		"wfs_typename" "reseau_routier4"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reseau_routier4"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	LABELITEM "nom_carto"
+	LABELCACHE ON
+	UNITS METERS
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 150001
+		MINSCALEDENOM 20000
+		STYLE
+			COLOR 208 208 208
+			WIDTH 4
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 2
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 20
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION ('[sens_de_circulation]' eq 'F')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION ('[sens_de_circulation]' eq 'T')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION ('[sens_de_circulation]' eq 'B')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 6
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 4
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4-rte"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 8
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 8
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 5
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 8
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE TRUE
+			BUFFER 3
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4_place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 8
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			POSITION AUTO
+			MAXLENGTH 5
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 8
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 6
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 8
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 6
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			POSITION AUTO
+			MAXLENGTH 5
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 3
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			POSITION AUTO
+			MAXLENGTH 5
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 3
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 8
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			POSITION AUTO
+			MAXLENGTH 5
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 3
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 8
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 4-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 208 208 208
+			WIDTH 10
+		END
+		STYLE
+			COLOR 249 255 91
+			WIDTH 8
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			MAXLENGTH 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 3
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from route_union) as foo using unique id_troncon using SRID=2154"
+	FILTER "sous_type IN('Niveau 3')"
+	GROUP "Reseaux de transports"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom_carto as nom,code_commune,box2d(GEOMUNION(the_geom)) as bbox FROM route_union  WHERE sous_type IN('Niveau 3') GROUP BY id_gipsi,nom_carto,code_commune"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "20"
+		"TABLE" "route_union"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Réseaux de transport"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Route - Niveau 3"
+		"DESCRIPTION" "Réseau routier"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "id_troncon"
+		"INFO_CHAMP" "nom_carto;id_gipsi;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"INFO_LIBELLE" "Nom;ID Gipsi;Catégorie;Code commune;Sens de circulation;Date début indisponible;Date fin indisponible;Motif"
+		"RESULT_CHAMP" "nom_carto"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"DETAILLEE_LIBELLE" "ID gipsi;Nom;Catégorie;Commune;Sens de circulation;Début d'insidponibilité; Fin d'indisponibilité;motif"
+		"PRINT_RESULT_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"PRINT_RESULT_LIBELLE" "nom;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"wfs_title"    		"reseau_routier3" 
+		"wfs_typename" "reseau_routier3"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reseau_routier3"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	LABELITEM "nom_carto"
+	LABELCACHE ON
+	UNITS METERS
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 250000
+		MINSCALEDENOM 20001
+		STYLE
+			COLOR 255 188 106
+			WIDTH 4
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 2
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 20
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 20001
+		MINSCALEDENOM 10000
+		EXPRESSION ('[sens_de_circulation]' eq 'F')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 20001
+		MINSCALEDENOM 10000
+		EXPRESSION ('[sens_de_circulation]' eq 'T')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 6
+		END
+	STYLE
+			COLOR 255 215 165
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 20001
+		MINSCALEDENOM 10000
+		EXPRESSION ('[sens_de_circulation]' eq 'B')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 6
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 4
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			MAXLENGTH 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 8
+		END
+	STYLE
+			COLOR 255 215 165
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 8
+		END
+	STYLE
+			COLOR 255 215 165
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			MAXLENGTH 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 6
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3-place"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 255 188 106
+			WIDTH 8
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 6
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			MAXLENGTH 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 188 104
+			WIDTH 11
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 9
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 255 188 104
+			WIDTH 11
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 9
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			MAXLENGTH 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 188 104
+			WIDTH 11
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 9
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 255 188 104
+			WIDTH 11
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 9
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			MAXLENGTH 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' ne 'PLACE' AND '[nature]' ne 'SQUA' AND '[nature]' ne 'ROND' AND '[nature]' ne 'CARR' AND '[nature]' ne 'LOTI' AND '[nature]' ne 'AIRE' AND '[nature]' ne 'PONT' AND '[nature]' ne 'RESI')
+		STYLE
+			COLOR 255 188 104
+			WIDTH 11
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 9
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 3-place"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B' AND '[nature]' eq 'PLACE' OR '[nature]' eq 'SQUA' OR '[nature]' eq 'ROND' OR '[nature]' eq 'CARR' OR '[nature]' eq 'LOTI' OR '[nature]' eq 'AIRE' OR '[nature]' eq 'PONT' OR '[nature]' eq 'RESI')
+		STYLE
+			COLOR 255 188 104
+			WIDTH 11
+		END
+		STYLE
+			COLOR 255 215 165
+			WIDTH 9
+		END
+		LABEL
+			ANGLE 0
+			WRAP " "
+			MAXLENGTH 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 5
+			COLOR 0 0 0
+			FONT "dejavu_condensed"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from route_union) as foo using unique id_troncon using SRID=2154"
+	FILTER "sous_type IN('Niveau 2')"
+	GROUP "Reseaux de transports"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom_carto as nom,code_commune,box2d(GEOMUNION(the_geom)) as bbox FROM route_union  WHERE sous_type IN('Niveau 2') GROUP BY id_gipsi,nom_carto,code_commune"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "21"
+		"TABLE" "route_union"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Réseaux de transport"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Route - Niveau 2"
+		"DESCRIPTION" "Réseau routier"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "id_troncon"
+		"INFO_CHAMP" "nom_carto;id_gipsi;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"INFO_LIBELLE" "Nom;ID Gipsi;Catégorie;Code commune;Sens de circulation;Date début indisponible;Date fin indisponible;Motif"
+		"RESULT_CHAMP" "nom_carto"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"DETAILLEE_LIBELLE" "ID gipsi;Nom;Catégorie;Commune;Sens de circulation;Début d'insidponibilité; Fin d'indisponibilité;motif"
+		"PRINT_RESULT_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"PRINT_RESULT_LIBELLE" "nom;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"wfs_title"    		"reseau_routier2" 
+		"wfs_typename" "reseau_routier2"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reseau_routier2"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	LABELITEM "nom_carto"
+	LABELCACHE ON
+	UNITS METERS
+	CLASS
+		NAME "Niveau 2"
+		MAXSCALEDENOM 400000
+		MINSCALEDENOM 20001
+		EXPRESSION ('[nature]' eq 'RD' OR '[nature]' eq 'RN' OR '[nature]' eq 'RTE')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 4
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 2
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 20
+			COLOR 0 0 0
+			OUTLINECOLOR 255 255 255
+			FONT "arial_black"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "Niveau 2"
+		MAXSCALEDENOM 400000
+		MINSCALEDENOM 20001
+		EXPRESSION ('[nature]' ne 'RD' AND '[nature]' ne 'RN' AND '[nature]' ne 'RTE')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 5
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 3
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "Niveau 2"
+		MAXSCALEDENOM 20001
+		MINSCALEDENOM 10000
+		EXPRESSION ('[sens_de_circulation]' eq 'F')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 7
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 5
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "Niveau 2"
+		MAXSCALEDENOM 20001
+		MINSCALEDENOM 10000
+		EXPRESSION ('[sens_de_circulation]' eq 'T')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 6
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 4
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 2"
+		MAXSCALEDENOM 20001
+		MINSCALEDENOM 10000
+		EXPRESSION ('[sens_de_circulation]' eq 'B')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 6
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 4
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "Niveau 2"
+		MAXSCALEDENOM 10000
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 8
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 8
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "Niveau 2"
+		MAXSCALEDENOM 10000
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 8
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 6
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 2"
+		MAXSCALEDENOM 10000
+		MINSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 8
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 6
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_gras"
+			SIZE 7
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 2"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'F')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 11
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 9
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 2"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'T')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 11
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 9
+		END
+		STYLE
+			COLOR 122 171 255
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 2"
+		MAXSCALEDENOM 5000
+		EXPRESSION ('[sens_de_circulation]' eq 'B')
+		STYLE
+			COLOR 132 99 102
+			WIDTH 11
+		END
+		STYLE
+			COLOR 239 154 156
+			WIDTH 9
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 9
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from route_union) as foo using unique id_troncon using SRID=2154"
+	FILTER "sous_type IN('Niveau 1')"
+	GROUP "Reseaux de transports"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom_carto as nom,code_commune,box2d(GEOMUNION(the_geom)) as bbox FROM route_union  WHERE sous_type IN('Niveau 1') GROUP BY id_gipsi,nom_carto,code_commune"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "22"
+		"TABLE" "route_union"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Réseaux de transport"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Route - Niveau 1"
+		"DESCRIPTION" "Réseau routier"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "id_troncon"
+		"INFO_CHAMP" "nom_carto;id_gipsi;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"INFO_LIBELLE" "Nom;ID Gipsi;Catégorie;Code commune;Sens de circulation;Date début indisponible;Date fin indisponible;Motif"
+		"RESULT_CHAMP" "nom_carto"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"DETAILLEE_LIBELLE" "ID gipsi;Nom;Catégorie;Commune;Sens de circulation;Début d'insidponibilité; Fin d'indisponibilité;motif"
+		"PRINT_RESULT_CHAMP" "id_gipsi;nom_carto;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"PRINT_RESULT_LIBELLE" "nom;sous_type;code_commune;sens_de_circulation;debut_indisponible;fin_indisponible;motif"
+		"wfs_title"    		"reseau_routier1" 
+		"wfs_typename" "reseau_routier1"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reseau_routier1"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	LABELITEM "nom_carto"
+	LABELCACHE ON
+	UNITS METERS
+	CLASSITEM "sens_de_circulation"
+	CLASS
+		MINSCALEDENOM 20001
+		NAME "Niveau 1"
+		STYLE
+			COLOR 48 48 48
+			WIDTH 3.6
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 2
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 50
+			COLOR 0 0 0
+			FONT "arial_black"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION /F/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 6
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 4
+		END
+			STYLE
+			COLOR 47 96 196
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_black"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION /T/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 6
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 4
+		END
+			STYLE
+			COLOR 47 96 196
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_black"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 20000
+		MINSCALEDENOM 10001
+		EXPRESSION /B/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 6
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 4
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_black"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION /F/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 8
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 6
+		END
+		STYLE
+			COLOR 47 96 196
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_black"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION /T/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 8
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 6
+		END
+		STYLE
+			COLOR 47 96 196
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_black"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 10001
+		MINSCALEDENOM 5000
+		EXPRESSION /B/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 8
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 6
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "arial_black"
+			SIZE 6
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 5001
+		EXPRESSION /F/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 11
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 9
+		END
+		STYLE
+			COLOR 47 96 196
+			SIZE 10
+			SYMBOL "flechef"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 10
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 5001
+		EXPRESSION /T/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 11
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 9
+		END
+		STYLE
+			COLOR 47 96 196
+			SIZE 10
+			SYMBOL "flechet"
+			GAP -55
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 10
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		NAME "niveau 1"
+		MAXSCALEDENOM 5001
+		EXPRESSION /B/
+		STYLE
+			COLOR 48 48 48
+			WIDTH 11
+		END
+		STYLE
+			COLOR 132 154 198
+			WIDTH 9
+		END
+		LABEL
+			ANGLE FOLLOW
+			POSITION AUTO
+			TYPE TRUETYPE
+			FORCE FALSE
+			BUFFER 15
+			COLOR 0 0 0
+			FONT "dejavu_condensed_bold"
+			SIZE 10
+			PARTIALS FALSE
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from centre) as foo using unique gid using SRID=2154"
+	GROUP "Centres"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom_habillage as nom,code,sous_type as nature,groupement,case when fictif=1 then 'regroupé' end,box2d(the_geom) as bbox FROM centre "
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "24"
+		"TABLE" "centre"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Centres"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Centres"
+		"DESCRIPTION" "Centre"
+		"SOURCE" "©SDIS71"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom_habillage"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "code;nom_habillage;groupement;secteur_1er_appel;regroupement;statut;non_realise"
+		"INFO_LIBELLE" "Code;Nom;Gpt;Secteur;Regroupement CPI;statut CPI;Inter non réalisées seules"
+		"DETAILLEE_CHAMP" "code;nom_habillage;sous_type;secteur_1er_appel;groupement;siege_gpt;regroupement;statut;non_realise"
+		"DETAILLEE_LIBELLE" "Code;Nom;Sous type;Secteur 1er appel;Groupement;Siege gpt;Regroupement;Statut CPI;Inter non réalisées seules"
+		"PRINT_RESULT_CHAMP" "nom_habillage"
+		"PRINT_RESULT_LIBELLE" "Nom"
+		"wfs_title"    		"centres" 
+		"wfs_typename" "centres"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "centres"
+	LABELITEM "nom_habillage"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	LABELMAXSCALEDENOM 1000000
+	CLASS
+		NAME "CIS"
+		EXPRESSION ('[sous_type]' eq 'CIS')
+		STYLE
+	 		COLOR 255 0 0
+			OUTLINECOLOR 150 0 0
+			SIZE 8
+			SYMBOL "circle"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			FONT "arial_narrow_gras"
+			COLOR 0 0 0
+			SIZE 8
+			OUTLINECOLOR 255 255 255
+			POSITION UC
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+	 	NAME "CI"
+	 	EXPRESSION ('[sous_type]' eq 'CI')
+	 	STYLE
+			COLOR 255 0 0
+	 		OUTLINECOLOR 150 0 0
+	 		SIZE 7
+	 		SYMBOL "square"
+	 	END
+	END
+	CLASS
+		NAME "CPI conventionné"
+		EXPRESSION ('[sous_type]' eq 'CPI CONV.' AND '[fictif]' eq 'non')
+		STYLE
+			COLOR 255 0 0
+			OUTLINECOLOR 150 0 0
+			SIZE 6
+			SYMBOL "triangle"
+		END
+	END
+	CLASS
+		NAME "CPI non conventionné"
+		EXPRESSION ('[sous_type]' eq 'CPI NON CONV.')
+		STYLE
+			COLOR 0 200 0
+			OUTLINECOLOR 0 120 0
+			SIZE 5
+			SYMBOL "triangle"
+		END
+	END
+#	CLASS
+#		NAME "Centre extérieur"
+#		EXPRESSION ('[sous_type]' eq 'Centre Extérieur')
+#		STYLE
+#			COLOR 200 0 0
+#			OUTLINECOLOR 150 0 0
+#			SIZE 8
+#			SYMBOL "circle"
+#		END
+#	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from reseau_ferre) as foo using unique gid using SRID=2154"
+	GROUP "Reseaux de transports"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "25"
+		"TABLE" "reseau_ferre"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Réseaux de transport"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG"  "singleSymbol"
+		"LIBELLE_NAME" "Réseau ferré"
+		"DESCRIPTION" "Réseau ferré"
+		"SOURCE" "©Navteq - Navstreet®"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "nom;pont;tunnel"
+		"DETAILLEE_LIBELLE" "Nom;Pont;Tunnel"
+		"INFO_CHAMP" "nom;pont;tunnel"
+		"INFO_LIBELLE" "Nom;Pont;Tunnel"
+		"PRINT_RESULT_CHAMP" "nom;pont;tunnel"
+		"PRINT_RESULT_LIBELLE" "Nom;Pont;Tunnel"
+		"wfs_title"    		"reseau_ferre" 
+		"wfs_typename" "reseau_ferre"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reseau_ferre"
+	TEMPLATE "templates/foo.htm"
+	TYPE LINE
+	UNITS METERS
+	CLASSITEM "numero_voie"
+	CLASS
+		MINSCALEDENOM 200000
+		NAME "Ligne > 1/350 000e"
+		STYLE
+			COLOR 130 130 130
+			SIZE 1
+			SYMBOL "line"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 199999
+		NAME "LGV < 1/350 000e"
+		EXPRESSION /752000/
+		STYLE
+			COLOR 180 0 0
+			SIZE 4
+			SYMBOL "line"
+		END
+		STYLE
+			COLOR 250 250 250
+			SIZE 2
+			SYMBOL "line"
+		END
+		STYLE
+			COLOR 180 0 0
+			SIZE 2
+			SYMBOL "dashed_train"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		MAXSCALEDENOM 199999
+		NAME "Ligne < 1/350 000e"
+		EXPRESSION /755000|760000|761000|769000|770000|775000|830000|860000|865000|867000|880000|883000|''/
+		STYLE
+			COLOR 150 150 150
+			SIZE 4
+			SYMBOL "line"
+		END
+		STYLE
+			COLOR 250 250 250
+			SIZE 2
+			SYMBOL "line"
+		END
+		STYLE
+			COLOR 150 150 150
+			SIZE 2
+			SYMBOL "dashed_train"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from prev_etablissement) as foo using unique gid using SRID=2154"
+	GROUP "Etablissements"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom,eta_lib_activite,eta_adr_voie,eta_adr_lib_commune,box2d(the_geom) as bbox FROM prev_etablissement"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "26"
+		"TABLE" "prev_etablissement"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Etablissements"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "ERP prévention"
+		"DESCRIPTION" "ERP prévention"
+		"SOURCE" "©SDIS71"
+		"CHAMP_INSEE" "eta_adr_commune"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "gid_erp2;nom"
+		"RESULT_LIBELLE" "Code PREV;Nom"
+		"INFO_CHAMP" "gid_erp2;nom;eta_types_classement;eta_lib_activite;eta_categorie;eta_date_visite_derniere;eta_date_visite_prochaine;eta_adr_lib_commune;eta_adr_voie;eta_efftot"
+		"INFO_LIBELLE" "Code PREV;Nom;Types;Activité;Catégorie;Dernière visite;Prochaine visite;Commune;Adresse;Effectif total"
+		"DETAILLEE_CHAMP" "gid_erp2;dossier_er;nom;eta_types_classement;eta_lib_activite;eta_categorie;eta_date_visite_derniere;eta_date_visite_prochaine;eta_adr_lib_commune;eta_adr_voie;eta_efftot"
+		"DETAILLEE_LIBELLE" "Code PREV;Dossier_ER;Nom;Types;Activité;Catégorie;Dernière visite;Prochaine visite;Commune;Adresse;Effectif total"
+		"PRINT_RESULT_CHAMP" "gid_erp2;dossier_er;nom;eta_types_classement;eta_categorie;eta_date_visite_derniere;eta_date_visite_prochaine;eta_adr_lib_commune;eta_adr_voie;eta_efftot"
+		"PRINT_RESULT_LIBELLE" "Code PREV;Dossier_ER;Nom;Types;Catégorie;Dernière visite;Prochaine visite;Commune;Adresse;Effectif total"
+		"wfs_title"    		"prev_etablissement" 
+		"wfs_typename" "prev_etablissement"
+		"gml_featureid" 	"gid_erp2" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "prev_etablissement"
+	TEMPLATE "templates/foo.htm"
+	OPACITY 100
+	TYPE POINT
+	UNITS METERS
+	CLASS
+		NAME "ERP"
+		MAXSCALEDENOM 20001
+		TEXT ([eta_label_type_cal])
+		EXPRESSION ([eta_status_ouvert]=1 AND '[eta_lib_genre]' eq 'ETABLISSEMENT')
+		STYLE
+			SIZE 14
+			SYMBOL "erpneutre"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION CC
+			COLOR 0 0 0
+			FONT "verdana-bold"
+			SIZE 7
+		END
+	END
+	CLASS
+		NAME "Habitation"
+		MAXSCALEDENOM 20001
+		TEXT ([eta_label_type_cal])
+		EXPRESSION ([eta_status_ouvert]=1 AND '[eta_lib_genre]' eq 'HABITATIONS')
+		STYLE
+			SIZE 14
+			SYMBOL "habneutre"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION CC
+			COLOR 0 0 0
+			FONT "verdana-bold"
+			SIZE 7
+		END
+	END
+	CLASS
+		NAME "Industrie"
+		MAXSCALEDENOM 20001
+		TEXT ([eta_label_type_cal])
+		EXPRESSION ([eta_status_ouvert]=1 AND '[eta_lib_genre]' eq 'INDUSTRIEL')
+		STYLE
+			SIZE 14
+			SYMBOL "indneutre"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION CC
+			COLOR 0 0 0
+			FONT "verdana-bold"
+			SIZE 7
+		END
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from prev_etablissement) as foo using unique gid using SRID=2154"
+	GROUP "Etablissements"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "200"
+		"TABLE" "prev_etablissement"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Etablissements"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "ERP prévention"
+		"DESCRIPTION" "ERP prévention"
+		"SOURCE" "©SDIS71"
+		"CHAMP_INSEE" "eta_adr_commune"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "gid_erp2;nom;eta_types_classement;eta_lib_activite;eta_categorie;eta_date_visite_derniere;eta_date_visite_prochaine;eta_adr_lib_commune;eta_adr_voie;eta_efftot"
+		"INFO_LIBELLE" "Code PREV;Nom;Types;Activité;Catégorie;Dernière visite;Prochaine visite;Commune;Adresse;Effectif total"
+		"DETAILLEE_CHAMP" "gid_erp2;dossier_er;nom;eta_types_classement;eta_lib_activite;eta_categorie;eta_date_visite_derniere;eta_date_visite_prochaine;eta_adr_lib_commune;eta_adr_voie;eta_efftot"
+		"DETAILLEE_LIBELLE" "Code PREV;Dossier_ER;Nom;Types;Activité;Catégorie;Dernière visite;Prochaine visite;Commune;Adresse;Effectif total"
+		"PRINT_RESULT_CHAMP" "gid_erp2;dossier_er;nom;eta_types_classement;eta_categorie;eta_date_visite_derniere;eta_date_visite_prochaine;eta_adr_lib_commune;eta_adr_voie;eta_efftot"
+		"PRINT_RESULT_LIBELLE" "Code PREV;Dossier_ER;Nom;Types;Catégorie;Dernière visite;Prochaine visite;Commune;Adresse;Effectif total"
+		"wfs_title"    		"prev_etablissement" 
+		"wfs_typename" "prev_etablissement"
+		"gml_featureid" 	"gid_erp2" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "prev_etablissement"
+	TEMPLATE "templates/foo.htm"
+	OPACITY 100
+	TYPE POINT
+	LABELITEM "nom"
+	UNITS METERS
+	LABELMAXSCALE 5000
+	CLASS
+		NAME "nom_erp"
+		MAXSCALEDENOM 10001
+		EXPRESSION ([eta_status_ouvert]=1)
+		STYLE
+			SIZE 1
+			SYMBOL "circle"
+			COLOR 113 77 168
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 7
+			WRAP " "
+			OFFSET 0 5
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			PARTIALS TRUE
+			FORCE TRUE
+			COLOR 96 53 165
+			FONT "verdana-bold"
+			SIZE 7
+		END
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from etare) as foo using unique id_gipsi using SRID=2154"
+	GROUP "Etablissements"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom,commune,voie,box2d(the_geom) as bbox FROM etare"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "38"
+		"TABLE" "etablissement"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Etablissements"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "ETARE"
+		"DESCRIPTION" "ETARE"
+		"SOURCE" "©SDIS71"
+		"CLE_PRI" "id_gipsi"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "nom;dossier_er;voie;commune;x;y"
+		"INFO_LIBELLE" "Nom;Dossier ER;Voie;Commune;X;Y"
+		"DETAILLEE_CHAMP" "nom;dossier_er;voie;commune;x;y"
+		"DETAILLEE_LIBELLE" "Nom;Dossier ER;Voie;Commune;X;Y"
+		"PRINT_RESULT_CHAMP" "nom;dossier_er;voie;commune;x;y"
+		"PRINT_RESULT_LIBELLE" "Nom;Dossier ER;Voie;Commune;X;Y"
+		"wfs_title"    		"etare" 
+		"wfs_typename" "etare"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "etare"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	LABELITEM "nom"
+	CLASS
+		NAME "ETARE"
+		MAXSCALEDENOM 20001
+		STYLE
+			COLOR 255 158 22
+			OUTLINECOLOR 255 103 2
+			SIZE 10
+			SYMBOL "square"
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 7
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION UC
+			COLOR 239 12 2
+			FONT "verdana-bold"
+			SIZE 7
+		END
+	END
+ END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from drire_icpe_a) as foo using unique id_gipsi using SRID=2154"
+	GROUP "Etablissements"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,nom,commune,adresse,activite_principale,box2d(the_geom) as bbox FROM drire_icpe_a"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "27"
+		"TABLE" "drire_icpe_a"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Etablissements"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "DRIRE-ICPE"
+		"DESCRIPTION" "DRIRE-ICPE"
+		"SOURCE" "©DRIRE"
+		"CLE_PRI" "id_gipsi"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "gidic;dossier_er;nom;activite_principale;adresse;commune;insee;seveso;ippc;silo;carriere;x;y"
+		"INFO_LIBELLE" "Code DRIRE;Dossier_ER;Nom;Activité;Adresse;Commune;INSEE;SEVESO;IPPC;Silo;Carrière;X;Y"
+		"DETAILLEE_CHAMP" "gidic;dossier_er;nom;activite_principale;adresse;commune;insee;seveso;ippc;silo;carriere;x;y"
+		"DETAILLEE_LIBELLE" "Code DRIRE;Dossier_ER;Nom;Activité;Adresse;Commune;INSEE;SEVESO;IPPC;Silo;Carrière;X;Y"
+		"PRINT_RESULT_CHAMP" "gidic;dossier_er;nom;activite_principale;adresse;commune;insee;seveso;ippc;silo;carriere;x;y"
+		"PRINT_RESULT_LIBELLE" "Code DRIRE;Dossier_ER;Nom;Activité;Adresse;Commune;INSEE;SEVESO;IPPC;Silo;Carrière;X;Y"
+		"wfs_title"    		"drire_ipce_a" 
+		"wfs_typename" "drire_ipce_a"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "drire_ipce_a"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	LABELITEM "nom"
+	CLASS
+		NAME "ICPE"
+		MAXSCALEDENOM 20001
+		STYLE
+			SIZE 16
+			SYMBOL "icpea"
+		END
+		LABEL
+			ANGLE 0
+			MAXLENGTH 7
+			WRAP " "
+			POSITION AUTO
+			ALIGN CENTER
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION UC
+			COLOR 22 67 165
+			FONT "verdana-bold"
+			SIZE 7
+		END
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from point_interet) as foo using unique gid using SRID=2154"
+	GROUP "Points d'interet"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,nature,categorie,box2d(the_geom) as bbox FROM point_interet"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "28"
+		"TABLE" "point_interet"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Points d'intérêt"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Point d'intérêt"
+		"DESCRIPTION" "Point d'intérêt"
+		"SOURCE" "©Navteq"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom;nature"
+		"RESULT_LIBELLE" "Nom;Nature"
+		"INFO_CHAMP" "nom;nature;categorie;hauteur;x;y"
+		"INFO_LIBELLE" "Nom;Nature;Catégorie;Hauteur;X;Y"
+		"DETAILLEE_CHAMP" "nom;nature;categorie;hauteur;x;y"
+		"DETAILLEE_LIBELLE" "Nom;Nature;Catégorie;Hauteur;X;Y"
+		"PRINT_RESULT_CHAMP" "nom;nature;categorie;hauteur"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature;Catégorie;Hauteur"
+		"wfs_title"    		"point_interet" 
+		"wfs_typename" "point_interet"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "point_interet"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	LABELITEM "nom"
+	CLASSITEM "nature"
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Batiment sportif' OR '[nature]' eq 'Carrière' OR '[nature]' eq 'Casino' OR '[nature]' eq 'Centrale électrique' OR '[nature]' eq 'Culte catholique ou orthodoxe' OR '[nature]' eq 'Culte divers' OR '[nature]' eq 'Culte israélite' OR '[nature]' eq 'Culte protestant' OR '[nature]' eq 'Discothèque' OR '[nature]' eq 'Divers public ou administratif' OR '[nature]' eq 'Enceinte militaire'  OR '[nature]' eq 'Golf' OR '[nature]' eq 'Hôtel de département' OR '[nature]' eq 'Marché' OR '[nature]' eq 'Mine' OR '[nature]' eq 'Parc de loisirs' OR '[nature]' eq 'Parc expositions' OR '[nature]' eq 'Palais des Congrès' OR '[nature]' eq 'Poste ou hôtel de police' OR '[nature]' eq 'Salle de spectacle' OR '[nature]' eq 'Théâtre' OR '[nature]' eq 'Village de vacances')
+		NAME "Autres"
+		STYLE
+			SIZE 12
+			SYMBOL "star"
+			COLOR 150 150 150
+			OUTLINECOLOR 50 50 50
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Bureau ou hôtel des postes')
+		NAME "poste"
+		STYLE
+			SIZE 18
+			SYMBOL "poste"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Cinéma')
+		NAME "Cinema"
+		STYLE
+			SIZE 16
+			SYMBOL "cinema"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Divers commercial' OR '[nature]' eq 'Centre commercial')
+		NAME "Commerce"
+		STYLE
+			SIZE 16
+			SYMBOL "diverscommerce"
+		END
+	END
+	CLASS
+	    MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Enseignement primaire' OR '[nature]' eq 'Enseignement secondaire' OR '[nature]' eq 'Enseignement supérieur')
+		NAME "ecole"
+		STYLE
+			SIZE 18
+			SYMBOL "ecole"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION UC
+			COLOR 0 0 0
+			FONT "verdana-italic"
+			SIZE 7
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Etablissement hospitalier')
+		NAME "hopital"
+		STYLE
+			SIZE 18
+			SYMBOL "hopital"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Hôtel')
+		NAME "Hôtel"
+		STYLE
+			SIZE 14
+			SYMBOL "hotel"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Gare fret uniquement' OR '[nature]' eq 'Gare voyageurs et fret' OR '[nature]' eq 'Gare voyageurs uniquement')
+		NAME "Gare"
+		STYLE
+			SIZE 20
+			SYMBOL "gare"
+		END
+	END
+	CLASS
+	    MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Information touristique')
+		NAME "info"
+		STYLE
+			SIZE 14
+			SYMBOL "pointinfo"
+		END
+	END
+	CLASS
+	    MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Maison forestière')
+		NAME "maison forestiere"
+		STYLE
+			SIZE 14
+			SYMBOL "maisforest"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Mise à l eau')
+		NAME "mise à l'eau"
+		STYLE
+			SIZE 14
+			SYMBOL "misealeau"
+		END
+	END
+	CLASS
+	    MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Monument historique')
+		NAME "monument histo"
+		STYLE
+			SIZE 14
+			SYMBOL "monhistorique"
+		END
+	END
+	CLASS
+	    MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Musée')
+		NAME "musee"
+		STYLE
+			SIZE 14
+			SYMBOL "musee"
+		END
+	END
+	CLASS
+	 	MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Restaurant')
+		NAME "Restaurant"
+		STYLE
+			SIZE 14
+			SYMBOL "resto"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Palais de justice')
+		NAME "Tribunal"
+		STYLE
+			SIZE 14
+			SYMBOL "tribunal"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Parking couvert')
+		NAME "parkcouvert"
+		STYLE
+			SIZE 14
+			SYMBOL "parkingcouvert"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Parking découvert')
+		NAME "parkdecouvert"
+		STYLE
+			SIZE 14
+			SYMBOL "parkingdecouvert"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Point de vue')
+		NAME "Point de vue"
+		STYLE
+			SIZE 14
+			SYMBOL "pointdevue"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Préfecture' OR '[nature]' eq 'Sous-préfecture')
+		NAME "Prefecture"
+		STYLE
+			SIZE 14
+			SYMBOL "prefecture"
+		END
+	END
+	CLASS
+	    MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Usine' OR '[nature]' eq 'Divers industriel')
+		NAME "usine"
+		STYLE
+			SIZE 14
+			SYMBOL "usine"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		EXPRESSION ('[nature]' eq 'Station service')
+		NAME "station service"
+		STYLE
+			SIZE 14
+			SYMBOL "stationservice"
+		END
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from icpe_erdf_transfos) as foo using unique gid using SRID=2154"
+	GROUP "Points d'interet"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,nom,commune,box2d(the_geom) as bbox FROM icpe_erdf_transfos"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "210"
+		"TABLE" "icpe_erdf_transfos"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Points d'interet"
+ 		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Transformateurs ErDF"
+		"DESCRIPTION" "Transformateurs ErDF"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "nom;adresse;commune"
+		"RESULT_LIBELLE" "Nom;Adresse;Commune"
+		"INFO_CHAMP" "nom;adresse;commune;fabriquant;puissance;type_local;latitude;longitude"
+		"INFO_LIBELLE" "Nom;Adresse;Commune;Fabriquant;Puissance;Type_local;Latitude;Longitude"
+		"DETAILLEE_CHAMP" "nom;adresse;commune;latitude;longitude"
+		"DETAILLEE_LIBELLE" "Nom;Adresse;Commune;Latitude;Longitude"
+		"PRINT_RESULT_CHAMP" "nom;adresse;commune;fabriquant;puissance;type_local;latitude;longitude"
+		"PRINT_RESULT_LIBELLE" "Nom;Adresse;Commune;Fabriquant;Puissance;Type_local;Latitude;Longitude"
+		"wfs_title"    		"transformateur_erdf" 
+		"wfs_typename" "transformateur_erdf"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "transformateur_erdf"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Transformateur ErDF"
+		STYLE
+			SIZE 14
+			SYMBOL "transfo"
+		END
+	END
+  END
+  
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from poteau_incendie) as foo using unique gid using SRID=2154"
+	GROUP "Points d eau"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT gid,numero as nom,commune,type,box2d(the_geom) as bbox FROM poteau_incendie"
+		"SEARCHENGINE_CLE_PRI" "gid"
+		"INDEX_LAYER" "29"
+		"TABLE" "poteau_incendie"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Points d'eau"
+ 		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Poteau incendie"
+		"DESCRIPTION" "Poteau incendie"
+		"CLE_PRI" "gid"
+		"RESULT_CHAMP" "type;numero;commune"
+		"RESULT_LIBELLE" "Type;Numéro;Commune"
+		"INFO_CHAMP" "type;numero;commune;emplacement;accessibilite;fonction_volant;ecoulement;bouchon;capot;debit;pression;domaine;x;y"
+		"INFO_LIBELLE" "Type;Numéro;commune;emplacement;accessibilite;fonction_volant;ecoulement;bouchon;capot;Débit;Pression;Domaine;X;Y"
+		"DETAILLEE_CHAMP" "numero;debit;pression;x;y"
+		"DETAILLEE_LIBELLE" "Numéro;Débit;Pression;X;Y"
+		"PRINT_RESULT_CHAMP" "type;numero;commune;emplacement;accessibilite;fonction_volant;ecoulement;bouchon;capot;debit;pression;domaine;x;y"
+		"PRINT_RESULT_LIBELLE" "Type;Numéro;commune;emplacement;accessibilite;fonction_volant;ecoulement;bouchon;capot;Débit;Pression;Domaine;X;Y"
+		"wfs_title"    		"poteau_incendie" 
+		"wfs_typename" "poteau_incendie"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "poteau_incendie"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	LABELITEM "numero"
+	LABELMAXSCALE 15001
+	CLASSITEM "type"
+	CLASS
+		MAXSCALEDENOM 25001
+		MINSCALEDENOM 10000
+		NAME "Poteau incendie"
+		EXPRESSION /PI/
+		STYLE
+			COLOR 50 132 255
+			OUTLINECOLOR 0 0 0
+			SIZE 6
+			SYMBOL "circle"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		MAXSCALEDENOM 10000
+		NAME "Poteau incendie"
+		EXPRESSION /PI/
+		STYLE
+			COLOR 50 132 255
+			OUTLINECOLOR 0 0 0
+			SIZE 8
+			SYMBOL "circle"
+			END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION UC
+			COLOR 72 0 255
+			FONT "verdana-bold"
+			SIZE 7
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Bouche incendie"
+		EXPRESSION /BI/
+		STYLE
+			COLOR 50 132 255
+			OUTLINECOLOR 0 0 0
+			SIZE 8
+			SYMBOL "square"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION UC
+			COLOR 72 0 255
+			FONT "verdana-bold"
+			SIZE 7
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Puisard"
+		EXPRESSION /Puisard/
+		STYLE
+			COLOR 50 132 255
+			OUTLINECOLOR 0 0 0
+			SIZE 8
+			SYMBOL "triangle"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION UC
+			COLOR 72 0 255
+			FONT "verdana-bold"
+			SIZE 7
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Point d'aspiration"
+		EXPRESSION /Point d'aspiration/
+		STYLE
+			COLOR 50 132 255
+			OUTLINECOLOR 0 0 0
+			SIZE 8
+			SYMBOL "triangle"
+		END
+		LABEL
+			TYPE TRUETYPE
+			FORCE TRUE
+			POSITION UC
+			COLOR 72 0 255
+			FONT "verdana-bold"
+			SIZE 7
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from pe_chateau_d_eau) as foo using unique gid using SRID=2154"
+	GROUP "Points d eau"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "30"
+		"TABLE" "pe_chateau_d_eau"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Points d'eau"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Château d'eau"
+		"DESCRIPTION" "Château d'eau"
+		"SOURCE" "BD Carthage®"
+		"CLE_PRI" "gid"
+		"INFO_CHAMP" "nom;commune;capacite;x;y"
+		"INFO_LIBELLE" "Nom;Commune;Capacité;X;Y"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "gid;nom;commune;capacite;x;y"
+		"DETAILLEE_LIBELLE" "Gid;Nom;Commune;Capacité;X;Y"
+		"wfs_title"    		"chateau_d_eau" 
+		"wfs_typename" "chateau_d_eau"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "chateau_d_eau"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Château d'eau"
+		STYLE
+			SIZE 14
+			SYMBOL "chateaueau"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from pe_reservoir) as foo using unique gid using SRID=2154"
+	GROUP "Points d eau"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "31"
+		"TABLE" "pe_reservoir"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Points d'eau"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Réservoir"
+		"DESCRIPTION" "Réservoir"
+		"SOURCE" "BD Carthage®"
+		"CLE_PRI" "gid"
+		"INFO_CHAMP" "nom;commune;capacite;x;y"
+		"INFO_LIBELLE" "Nom;Commune;Capacité;X;Y"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "nom;commune;capacite;x;y"
+		"DETAILLEE_LIBELLE" "Nom;Commune;Capacité;X;Y"
+		"wfs_title"    		"reservoir" 
+		"wfs_typename" "reservoir"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "reservoir"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Réservoir"
+		STYLE
+			SIZE 8
+			SYMBOL "reservoir"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from pe_station_traitement) as foo using unique gid using SRID=2154"
+	GROUP "Points d eau"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "32"
+		"TABLE" "pe_station_traitement"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Points d'eau"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Station de traitement"
+		"DESCRIPTION" "Station de traitement"
+		"SOURCE" "BD Carthage®"
+		"CLE_PRI" "gid"
+		"INFO_CHAMP" "nom;commune;capacite;x;y"
+		"INFO_LIBELLE" "Nom;Commune;Capacité;X;Y"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "gid;nom;commune;capacite;x;y"
+		"DETAILLEE_LIBELLE" "Gid;Nom;Commune;Capacité;X;Y"
+		"wfs_title"    		"pe_station_traitement" 
+		"wfs_typename" "pe_station_traitement"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "pe_station_traitement"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Station de traitement"
+		STYLE
+			SIZE 14
+			SYMBOL "station"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from pe_station_pompage) as foo using unique gid using SRID=2154"
+	GROUP "Points d eau"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "33"
+		"TABLE" "pe_station_pompage"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Points d'eau"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Station de pompage"
+		"DESCRIPTION" "Station de pompage"
+		"SOURCE" "BD Carthage®"
+		"CLE_PRI" "gid"
+		"INFO_CHAMP" "nom;commune;capacite;x;y"
+		"INFO_LIBELLE" "Nom;Commune;Capacité;X;Y"
+		"RESULT_CHAMP" "nom"
+		"RESULT_LIBELLE" "Nom"
+		"DETAILLEE_CHAMP" "gid;nom;commune;capacite;x;y"
+		"DETAILLEE_LIBELLE" "Gid;Nom;Commune;Capacité;X;Y"
+		"wfs_title"    		"pe_station_pompage" 
+		"wfs_typename" "pe_station_pompage"
+		"gml_featureid" 	"gid" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "pe_station_pompage"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Station de pompage"
+		STYLE
+			SIZE 14
+			SYMBOL "station"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+ LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from point_remarquable) as foo using unique id_gipsi using SRID=2154"
+	GROUP "adresses"
+	STATUS ON
+	METADATA
+		"SEARCHENGINE_QUERY_FULL" "SELECT id_gipsi,affichage_nom as nom,commune,box2d(the_geom) as bbox FROM point_remarquable"
+		"SEARCHENGINE_CLE_PRI" "id_gipsi"
+		"INDEX_LAYER" "34"
+		"TABLE" "point_remarquable"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Adresses"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Point adresse"
+		"DESCRIPTION" "Point adresse"
+		"SOURCE" "©SDIS71"
+		"CLE_PRI" "id_gipsi"
+		"RESULT_CHAMP" "affichage_nom"
+		"RESULT_LIBELLE" "Nom"
+		"INFO_CHAMP" "affichage_nom;sous_type;commune"
+		"INFO_LIBELLE" "Nom;Nature;Commune"
+		"DETAILLEE_CHAMP" "affichage_nom;sous_type;commune"
+		"DETAILLEE_LIBELLE" "Nom;Nature;Commune"
+		"PRINT_RESULT_CHAMP" "affichage_nom;sous_type;commune"
+		"PRINT_RESULT_LIBELLE" "Nom;Nature;Commune"
+		"wfs_title"    		"adresses" 
+		"wfs_typename" "adresses"
+		"gml_featureid" 	"id_gipsi" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "adresses"
+	TEMPLATE "templates/foo.htm"
+	TYPE POINT
+	LABELITEM "affichage_nom"
+	LABELMAXSCALE 10001
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Point adresse"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' ne 'RCEA' AND '[sous_type]' ne 'BOIS' AND '[sous_type]' ne 'PARC' AND '[sous_type]' ne 'CHAT' AND '[sous_type]' ne 'FORET' AND '[sous_type]' ne 'LAC' AND '[sous_type]' ne 'RUIS' AND '[sous_type]' ne 'CANAL' AND '[sous_type]' ne 'ETANG' AND '[sous_type]' ne 'RIV' AND '[denomination]' ne 'VNR' AND  '[sous_type]' ne 'LOC' AND '[sous_type]' ne 'ETS' AND '[sous_type]' ne 'USINE' AND '[sous_type]' ne 'LOTI' AND '[sous_type]' ne 'RESI' AND '[sous_type]' ne 'CLOS' AND '[sous_type]' ne 'CAMP' AND '[sous_type]' ne 'CS' AND '[sous_type]' ne 'LGV' AND '[sous_type]' ne 'PN' AND '[sous_type]' ne 'LTGV' AND '[sous_type]' ne 'SNCF' AND '[sous_type]' ne 'PISCI' AND '[sous_type]' ne 'PARK' AND '[sous_type]' ne 'CHOSP' AND '[sous_type]' ne 'GEND' AND '[sous_type]' ne 'GARE' AND '[sous_type]' ne 'STADE' AND '[sous_type]' ne 'AERO' AND '[sous_type]' ne 'MAIRI' AND '[sous_type]' ne 'AIRE' AND '[sous_type]' ne 'BOURG' AND '[sous_type]' ne 'PEAGE')
+		STYLE
+			COLOR 173 106 29
+			SIZE 1
+			SYMBOL "circle"
+		END
+		LABEL
+		LABEL
+			TYPE TRUETYPE
+			ALIGN CENTER
+			FORCE TRUE
+			POSITION CC
+			COLOR 137 84 23
+			SIZE 7
+			FONT "verdana-bold-italic"
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Aérodrome"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'AERO')
+		STYLE
+			SIZE 14
+			SYMBOL "aerodrome"
+		END
+		LABEL
+			COLOR 20 20 20
+			SIZE 7
+			FONT "verdana"
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			POSITION UC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Aire"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'AIRE')
+		STYLE
+			SIZE 16
+			SYMBOL "aire"
+		END
+		LABEL
+			COLOR 20 20 20
+			SIZE 7
+			FONT "verdana"
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			POSITION UC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Bois"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'BOIS' OR '[sous_type]' eq 'FORET' OR '[sous_type]' eq 'PARC')
+		STYLE
+			COLOR 35 119 58
+			SIZE 2
+			SYMBOL "circle"
+		END
+		LABEL
+			COLOR 35 119 58
+			SIZE 7
+			FONT "verdana-bold-italic"
+			MAXLENGTH 10
+			WRAP " "
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			POSITION CC
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Camping"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'CAMP')
+		STYLE
+			COLOR 0 0 0
+			SIZE 14
+			SYMBOL "camping"
+		END
+		LABEL
+			COLOR 0 0 0
+			SIZE 7
+			FONT "verdana-italic"
+			TYPE TRUETYPE
+			ALIGN CENTER
+			FORCE TRUE
+			POSITION UC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Chateau"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'CHAT')
+		STYLE
+			SIZE 16
+			SYMBOL "chateau"
+		END
+		LABEL
+			COLOR 20 20 20
+			SIZE 7
+			FONT "verdana"
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			POSITION UC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Gare"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'GARE')
+		STYLE
+			SIZE 20
+			SYMBOL "gare"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Gendarmerie"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'GEND')
+		STYLE
+			SIZE 18
+			SYMBOL "gendarmerie"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Hopital"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'CHOSP')
+		STYLE
+			SIZE 18
+			SYMBOL "hopital"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "LGV"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'LGV')
+		STYLE
+			SIZE 12
+			SYMBOL "lgv"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Ligne SNCF"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'LTER')
+		STYLE
+			SIZE 12
+			SYMBOL "ter"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Lotissement - Résidence"
+		EXPRESSION ([geocode]=1 AND ('[sous_type]' eq 'LOTI' OR '[sous_type]' eq 'RESI' OR '[sous_type]' eq 'CLOS'))
+		STYLE
+			COLOR 64 64 64
+			SIZE 7
+			SYMBOL "losange"
+		END
+		LABEL
+			COLOR 64 64 64
+			SIZE 7
+			FONT "verdana-italic"
+			TYPE TRUETYPE
+			ALIGN CENTER
+			FORCE TRUE
+			POSITION UC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Mairie"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'MAIRI')
+		STYLE
+			SIZE 14
+			SYMBOL "mairie"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Passage à niveau"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'PN')
+		STYLE
+			SIZE 14
+			SYMBOL "passageniveau"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Parking"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'PARK')
+		STYLE
+			SIZE 16
+			SYMBOL "parkingdecouvert"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Peage"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'PEAGE')
+		STYLE
+			SIZE 24
+			SYMBOL "peage"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Piscine"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'PISCI')
+		STYLE
+			SIZE 14
+			SYMBOL "piscine"
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "PK SNCF"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'SNCF' OR '[sous_type]' eq 'LTGV')
+		STYLE
+			SIZE 12
+			SYMBOL "pk"
+		END
+	END
+  	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Point hydrographique"
+		EXPRESSION ([geocode]=1 AND ('[sous_type]' eq 'LAC' OR '[sous_type]' eq 'ETANG' OR '[sous_type]' eq 'CANAL' OR '[sous_type]' eq 'RIV' OR '[sous_type]' eq 'RUIS'))
+		STYLE
+			COLOR 115 74 255
+			SIZE 2
+			SYMBOL "circle"
+		END
+		LABEL
+			COLOR 115 74 255
+			OUTLINECOLOR 255 255 255
+			SIZE 7
+			FONT "verdana-italic"
+			TYPE TRUETYPE
+			ALIGN CENTER
+			FORCE TRUE
+			POSITION CC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Point Routier"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'RCEA')
+		STYLE
+			SIZE 12
+			SYMBOL "pr"
+		END
+		LABEL
+			COLOR 0 0 0
+			SIZE 7
+			MAXLENGTH 15
+			WRAP " "
+			FONT "verdana-italic"
+			TYPE TRUETYPE
+			ALIGN CENTER
+			FORCE TRUE
+			POSITION AUTO
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Etablissement"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'ETS' OR '[sous_type]' eq 'USINE')
+		STYLE
+			COLOR 0 0 0
+			SIZE 10
+			SYMBOL "usine"
+		END
+		LABEL
+			COLOR 0 0 0
+			SIZE 7
+			FONT "verdana-italic"
+			TYPE TRUETYPE
+			ALIGN CENTER
+			FORCE TRUE
+			POSITION UC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 15001
+		NAME "Stade"
+		EXPRESSION ([geocode]=1 AND '[sous_type]' eq 'STADE')
+		STYLE
+			SIZE 14
+			SYMBOL "stade"
+		END
+		LABEL
+			COLOR 0 76 6
+			SIZE 7
+			FONT "verdana-italic"
+			TYPE TRUETYPE
+			ALIGN center
+			FORCE TRUE
+			POSITION UC
+			MAXLENGTH 10
+			WRAP " "
+		END
+	END
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "Adresse non localisée"
+		EXPRESSION ([geocode]=0)
+		STYLE
+			COLOR 0 0 0
+			SIZE 16
+			SYMBOL "nl"
+		END
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom FROM (SELECT * FROM inondation_alea) AS foo USING UNIQUE gid USING SRID=2154"
+	GROUP "Zones inondables"
+	STATUS OFF
+	METADATA
+		"INDEX_LAYER" "35"
+		"TABLE" "inondation_alea"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"SELECTION" "YES"
+		"EDITABLE" "0"		
+		"CLASSIFYLEG"	"singleSymbol"
+		"LIBELLE_GROUP" "Zones inondables"
+		"LIBELLE_NAME" "Aleas inondation"
+		"DESCRIPTION"	"Aléas inondation"
+		"SOURCE" "©IGN - MEEDDAT®"
+		"CLE_PRI" "gid"
+		"INFO_CHAMP"	"theme"
+		"INFO_LIBELLE" "Thème"
+		"RESULT_CHAMP" "theme"
+		"RESULT_LIBELLE" "Thème"
+		"DETAILLEE_CHAMP" "theme;risque;fournisseur"
+		"DETAILLEE_LIBELLE" "Thème;Risque;Fournisseur"
+		"PRINT_RESULT_CHAMP" "theme;risque;fournisseur"
+		"PRINT_RESULT_LIBELLE" "Thème;Risque;Fournisseur"
+	END
+	NAME "aleas inondation"
+	TEMPLATE "templates/foo.htm"
+	OPACITY 50
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		NAME "Aléas"
+		STYLE
+			COLOR 91 113 255
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom FROM (SELECT * FROM inondation_ppr) AS foo USING UNIQUE gid USING SRID=2154"
+	GROUP "Zones inondables"
+	STATUS OFF
+	METADATA
+		"INDEX_LAYER" "36"
+		"TABLE" "inondation_ppr"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_GROUP" "Zones inondables"
+		"LIBELLE_NAME" "PPR inondation"
+		"DESCRIPTION" "PPR inondation"
+		"SOURCE" "©IGN - MEEDDAT®"
+		"CLE_PRI" "gid"
+		"INFO_CHAMP" "theme"
+		"INFO_LIBELLE" "Thème"
+		"RESULT_CHAMP" "theme"
+		"RESULT_LIBELLE" "Thème"
+		"DETAILLEE_CHAMP" "theme;risque;degre;fournisseur"
+		"DETAILLEE_LIBELLE" "Thème;Risque;Degrés;Fournisseur"
+		"PRINT_RESULT_CHAMP" "theme;risque;degre;fournisseur"
+		"PRINT_RESULT_LIBELLE" "Thème;Risque;Degrés;Fournisseur"
+	END
+	NAME "ppr inondation"
+	TEMPLATE "templates/foo.htm"
+	OPACITY 50
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		NAME "PPRI"
+		STYLE
+			COLOR 255 48 65
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from quadrillage25000) as foo using unique gid using SRID=2154"
+	GROUP "Quadrillage"
+	STATUS OFF
+	METADATA
+		"INDEX_LAYER" "200"
+		"TABLE" "quadrillage25000"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Quadrillage"
+		"SELECTION" "NO"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Page"
+		"DESCRIPTION" "Page"
+		"SOURCE" "sdis71®"
+		"CLE_PRI" "gid"
+	END
+	NAME "Page"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 300000
+		NAME "Page"
+		STYLE
+			SIZE 1
+			OUTLINECOLOR 0 0 0
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from quadrillage3000) as foo using unique gid using SRID=2154"
+	GROUP "Quadrillage"
+	STATUS OFF
+	METADATA
+		"INDEX_LAYER" "201"
+		"TABLE" "quadrillage3000"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Quadrillage"
+		"SELECTION" "NO"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Parcellaire"
+		"DESCRIPTION" "Parcellaire"
+		"SOURCE" "sdis71®"
+		"CLE_PRI" "gid"
+	END
+	NAME "Parcellaire"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	LABELITEM "num_folio"
+	CLASS
+		MAXSCALEDENOM 25001
+		NAME "Parcellaire"
+		STYLE
+			SIZE 2
+			OUTLINECOLOR 70 70 70
+			SYMBOL "square"
+		END
+		LABEL
+			FONT "verdana-bold-italic"
+			SIZE 10
+			TYPE TRUETYPE
+			COLOR 160 160 160
+			OUTLINECOLOR 130 130 130
+			FORCE TRUE
+			OFFSET 0 0
+			PARTIALS TRUE
+			POSITION AUTO
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom from (select * from quadrillage200) as foo using unique gid using SRID=2154"
+	GROUP "Quadrillage"
+	STATUS OFF
+	METADATA
+		"INDEX_LAYER" "202"
+		"TABLE" "quadrillage200"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"LIBELLE_GROUP" "Quadrillage"
+		"SELECTION" "NO"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "200m"
+		"DESCRIPTION" "200m"
+		"SOURCE" "sdis71®"
+		"CLE_PRI" "gid"
+	END
+	NAME "200m"
+	TEMPLATE "templates/foo.htm"
+	TYPE POLYGON
+	UNITS METERS
+	CLASS
+		MAXSCALEDENOM 10001
+		NAME "200m"
+		STYLE
+			SIZE 1
+			OUTLINECOLOR 185 185 185
+			SYMBOL "square"
+		END
+		TEMPLATE "templates/foo.htm"
+	END
+  END
+
+  LAYER
+	CONNECTION "host=192.6.1.53  port=5433 dbname=cartogeoconcept user=postgres password=G8iVI2R"
+	CONNECTIONTYPE POSTGIS
+	DATA "the_geom FROM (SELECT * FROM couche_post_it) AS foo USING UNIQUE id_post_it USING SRID=2154"
+	GROUP "Post-it"
+	STATUS ON
+	METADATA
+		"INDEX_LAYER" "37"
+		"TABLE" "couche_post_it"
+		"LEGENDE" "ON"
+		"GROUP" "ON"
+		"SELECTION" "YES"
+		"EDITABLE" "0"
+		"CLASSIFYLEG" "singleSymbol"
+		"LIBELLE_NAME" "Post-it"
+		"DESCRIPTION" "Post-it"
+		"CLE_PRI" "id_post_it"
+		"INFO_CHAMP" "nom;login;type"
+		"INFO_LIBELLE" "Nom;Login;Type"
+		"RESULT_CHAMP" "nom;login"
+		"RESULT_LIBELLE" "Nom;Login"
+		"DETAILLEE_CHAMP" "nom;type;login"
+		"DETAILLEE_LIBELLE" "Nom;Type;Login"
+		"PRINT_RESULT_CHAMP" "nom;type;login"
+		"PRINT_RESULT_LIBELLE" "Nom;Type;Login"
+		"wfs_title"    		"Post-it" 
+		"wfs_typename" "Post-it"
+		"gml_featureid" 	"id_post_it" 
+		"gml_include_items" "all"
+	END
+	DUMP TRUE
+	NAME "Post-it"
+	TEMPLATE "templates/foo.htm"
+	OPACITY 80
+	TYPE POINT
+	UNITS METERS
+	LABELITEM "nom"
+	CLASSITEM "type"
+	LABELMAXSCALEDENOM 350001
+	CLASS
+		NAME "Alerte eau"
+		EXPRESSION "eau"
+		LABEL
+			FONT "verdana"
+			MAXSIZE 256
+			MINSIZE 4
+			SIZE 7
+			TYPE TRUETYPE
+			BUFFER 0
+			COLOR 0 0 0
+			FORCE TRUE
+			MINDISTANCE -1
+			MINFEATURESIZE -1
+			OFFSET 0 0
+			PARTIALS TRUE
+			POSITION UC
+		END
+		STYLE
+			SIZE 16
+			SYMBOL "p_eau"
+		END
+	END
+	CLASS
+		NAME "Alerte voirie"
+		EXPRESSION "voirie"
+		LABEL
+			FONT "verdana"
+			MAXSIZE 256
+			MINSIZE 4
+			SIZE 7
+			TYPE TRUETYPE
+			BUFFER 0
+			COLOR 0 0 0
+			FORCE TRUE
+			MINDISTANCE -1
+			MINFEATURESIZE -1
+			OFFSET 0 0
+			PARTIALS TRUE
+			POSITION UC
+		END
+		STYLE
+			SIZE 16
+			SYMBOL "voirie"
+		END
+	END
+  END
+
+END

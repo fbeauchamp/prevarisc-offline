@@ -1,0 +1,11 @@
+{
+  "generator-backbone": {
+    "appPath": "app",
+    "appName": "Clientv2",
+    "coffee": false,
+    "testFramework": "mocha",
+    "templateFramework": "mustache",
+    "compassBootstrap": false
+  },
+  "generator-mocha": {}
+}

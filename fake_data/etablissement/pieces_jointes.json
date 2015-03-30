@@ -1,0 +1,23 @@
+{
+    "response": [
+        {
+            "ID_PIECEJOINTE": "51553",
+            "NOM_PIECEJOINTE": "test liste principal",
+            "EXTENSION_PIECEJOINTE": ".map",
+            "DESCRIPTION_PIECEJOINTE": "",
+            "DATE_PIECEJOINTE": "2015-03-30",
+            "ID_ETABLISSEMENT": "6645",
+            "PLACEMENT_ETABLISSEMENTPJ": "0"
+        },
+        {
+            "ID_PIECEJOINTE": "51552",
+            "NOM_PIECEJOINTE": "plan1",
+            "EXTENSION_PIECEJOINTE": ".jpg",
+            "DESCRIPTION_PIECEJOINTE": "dqrhgtsruhjsrjyh",
+            "DATE_PIECEJOINTE": "2015-03-30",
+            "ID_ETABLISSEMENT": "6645",
+            "PLACEMENT_ETABLISSEMENTPJ": "2"
+        }
+    ],
+    "status": "success"
+}

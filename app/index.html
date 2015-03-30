@@ -1,0 +1,66 @@
+<!doctype html>
+<html manifest="./manifest.appcache">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Prevarisc - mobile</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui"/>
+
+    <!-- favicons for mobile-->
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
+
+    <!-- http://updates.html5rocks.com/2014/11/Support-for-installable-web-apps-with-webapp-manifest-in-chrome-38-for-Android installable webapp -->
+    <link rel="manifest" href="manifest.json">
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet' type='text/css'>-->
+
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- full screen on ios if used as an offline app-->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <style>
+
+    </style>
+    <script>
+
+        if (window.applicationCache) {
+
+            window.applicationCache.addEventListener('updateready', function () {
+
+                window.applicationCache.swapCache();
+                window.applicationCache.cacheSwapped = true;
+
+            }, false);
+
+
+        } else {
+            console.log('no cache')
+        }
+    </script>
+</head>
+<body>
+
+<div id="app" class="container-fluid">
+    <table class="table table-bordered table-striped" id="datatable"></table>
+    <div class="" id="etablissement">
+        Chargement en cours
+    </div>
+
+
+</div>
+
+<!-- build:js scripts/main.js -->
+<script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
+<!-- endbuild -->
+</body>
+</html>
